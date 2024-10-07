@@ -1,3 +1,3 @@
-module github.com/icodealot/noaa
+module github.com/jacaudi/nws
 
 go 1.18

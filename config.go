@@ -1,4 +1,4 @@
-package noaa
+package nws
 
 import (
 	"fmt"
@@ -8,18 +8,18 @@ import (
 // deprecated
 // Default values for the weather.gov REST API config which will
 // be replaced by Config. These are subject to deletion in the future.
-// Instead, use noaa.GetConfig followed by:
+// Instead, use nws.GetConfig followed by:
 //     Config.BaseURL, Config.UserAgent, Config.Accept
 const (
 	API       = "https://api.weather.gov"
-	APIKey    = "github.com/icodealot/noaa" // User-Agent default value
+	APIKey    = "github.com/jacaudi/nws" // User-Agent default value
 	APIAccept = "application/ld+json"       // Changes may affect struct mappings below
 )
 
-// Config instance for the API calls executed by the NOAA client.
+// Config instance for the API calls executed by the NWS client.
 var config = GetDefaultConfig()
 
-// Config describes important values for the NOAA API and allows for
+// Config describes important values for the NWS API and allows for
 // configuration and testing of various options. Note, the User-Agent
 // field of HTTP requests serves as a proxy for an API key and in the
 // future weather.gov might change this behavior.

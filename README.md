@@ -1,9 +1,9 @@
-# noaa [![GoDoc](https://godoc.org/github.com/icodealot/noaa?status.svg)](https://godoc.org/github.com/icodealot/noaa)
+# nws [![GoDoc](https://godoc.org/github.com/jacaudi/nws?status.svg)](https://godoc.org/github.com/jacaudi/nws)
 
 Go package for parts of the weather.gov API. The data provided by weather.gov
 is in the public domain and covers the continental United States. The service
 is maintained by the National Weather Service under the umbrella of the
-National Oceanic and Atmospheric Administration (NOAA).
+National Oceanic and Atmospheric Administration (NWS).
 
 Data on various weather.gov API endpoints is measured at different intervals.
 If a data point is measured hourly then you should take this into account when
@@ -11,36 +11,36 @@ polling for updates.
 
 ## API
 
-`noaa` is a Go client for the weather.gov API and supports the following endpoints:
+`nws` is a Go client for the weather.gov API and supports the following endpoints:
 
 ```go
-noaa.Points(lat string, lon string) (points *PointsResponse, err error) {
+nws.Points(lat string, lon string) (points *PointsResponse, err error) {
 ```
 
 ```go
-noaa.Office(id string) (office *OfficeResponse, err error) {
+nws.Office(id string) (office *OfficeResponse, err error) {
 ```
 
 ```go
-noaa.Stations(lat string, lon string) (stations *StationsResponse, err error) {
+nws.Stations(lat string, lon string) (stations *StationsResponse, err error) {
 ```
 
 ```go
-noaa.Forecast(lat string, lon string) (forecast *ForecastResponse, err error) {
+nws.Forecast(lat string, lon string) (forecast *ForecastResponse, err error) {
 ```
 
 ```go
-noaa.GridpointForecast(lat string, lon string) (forecast *GridpointForecastResponse, err error) {
+nws.GridpointForecast(lat string, lon string) (forecast *GridpointForecastResponse, err error) {
 ```
 
 ```go
-noaa.HourlyForecast(lat string, long string) (forecast *HourlyForecastResponse, err error) {
+nws.HourlyForecast(lat string, long string) (forecast *HourlyForecastResponse, err error) {
 ```
 
 For convenience, the ForecastResponse includes a reference to the PointsResponse
 obtained. In 2017 api.weather.gov was updated with a new REST API that requires
 multiple calls to obtain the relevant information for the coordinates given by
-latitude and longitude. This PointsResponse is cached by the `noaa` client to
+latitude and longitude. This PointsResponse is cached by the `nws` client to
 reduce the number of round trips required for static data. (set of endpoints)
 
 ## Setup
@@ -48,7 +48,7 @@ reduce the number of round trips required for static data. (set of endpoints)
 Assuming a working `go` 1.18+ toolchain is in place this module can be installed with:
 
 ```
-go get -u github.com/icodealot/noaa
+go get -u github.com/jacaudi/nws
 ```
 
 ## Examples
@@ -86,10 +86,10 @@ A specific example can be run using:
 2023/05/21 09:27:08 Saturday Night       ---> Windspeed: 10 mph          Temperature: 59F
 --- PASS: ExampleGetChicagoForecast (4.14s)
 PASS
-ok      github.com/icodealot/noaa       4.177s
+ok      github.com/jacaudi/nws       4.177s
 ```
 
-Here is an example of using the `github.com/icodealot/noaa` module to get
+Here is an example of using the `github.com/jacaudi/nws` module to get
 forecasted temperatures by day.
 
 ```go
@@ -98,11 +98,11 @@ package main
 import (
 	"fmt"
 	
-	"github.com/icodealot/noaa"
+	"github.com/jacaudi/nws"
 )
 
 func main() {
-	forecast, err := noaa.Forecast("41.837", "-87.685") // Chicago, IL
+	forecast, err := nws.Forecast("41.837", "-87.685") // Chicago, IL
 	if err != nil {
 		fmt.Printf("Error getting the forecast: %v", err)
 		return
@@ -132,4 +132,4 @@ Sunday               ---> 45F
 Sunday Night         ---> 28F
 ```
 
-Check out the types in `noaa.go` for more details about fields returned by the weather API.
+Check out the types in `nws.go` for more details about fields returned by the weather API.

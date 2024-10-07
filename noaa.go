@@ -1,7 +1,7 @@
-// Package noaa implements a basic wrapper around api.weather.gov to
+// Package nws implements a basic wrapper around api.weather.gov to
 // grab HTTP responses to endpoints (i.e.: weather & forecast data)
 // by the National Weather Service, an agency of the United States.
-package noaa
+package nws
 
 import "fmt"
 
@@ -10,7 +10,7 @@ import "fmt"
 var pointsCache = map[string]*PointsResponse{}
 
 // Points returns a reference to a PointsResponse (cached if appropriate)
-// which contains useful noaa endpoints for a given <lat,lon> to use in
+// which contains useful nws endpoints for a given <lat,lon> to use in
 // subsequent calls to the api
 func Points(lat string, lon string) (points *PointsResponse, err error) {
 	endpoint := config.endpointPoints(lat, lon)
@@ -94,7 +94,7 @@ func HourlyForecast(lat string, long string) (forecast *HourlyForecastResponse, 
 }
 
 // Using the quantitative value feature flags to enable QV responses
-// causes the noaa api to ignore the requested unit types. This also
+// causes the nws api to ignore the requested unit types. This also
 // populates fields that were previously populated for backward
 // compatibility. This is necessary because quantitative values replace
 // deprecated fields with a nested object. See: QuantitativeValue.

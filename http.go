@@ -1,4 +1,4 @@
-package noaa
+package nws
 
 import (
 	"encoding/json"
@@ -25,7 +25,7 @@ func decode(endpoint string, v any) error {
 	return nil
 }
 
-// HTTP GET the noaa endpoint provided. We could just use http.Get() but
+// HTTP GET the nws endpoint provided. We could just use http.Get() but
 // this helps since we include some custom header values
 func get(endpoint string) (res *http.Response, err error) {
 	req, err := http.NewRequest("GET", endpoint, nil)

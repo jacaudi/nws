@@ -1,7 +1,7 @@
-package noaa
+package nws
 
 // QuantitativeValue is available for various statistics and can be
-// enabled with an optional request header to the noaa API. In the
+// enabled with an optional request header to the nws API. In the
 // future it is expected at that QV will replace single values such
 // as measurements for Temperature
 type QuantitativeValue struct {

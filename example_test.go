@@ -4,13 +4,13 @@
 // Examples can be run with `go test -tags=examples -v` and do not necessarily
 // require access to the weather.gov API. Examples demonstrate various uses of
 // the client and how to set config values.
-package noaa_test
+package nws_test
 
 import (
 	"fmt"
 	"log"
 
-	"github.com/icodealot/noaa"
+	"github.com/jacaudi/nws"
 )
 
 func ExampleSetConfig() {
@@ -20,19 +20,19 @@ func ExampleSetConfig() {
 
 	// When replacing the entire Config, three fields are required at a minimum.
 	// In general SetUnits() and SetUserAgent() are probably more useful.
-	noaa.SetConfig(noaa.Config{
+	nws.SetConfig(nws.Config{
 		BaseURL:   "https://unplanned-hostname-change.com",
-		UserAgent: "(github.com/icodealot/noaa test user-agent)",
+		UserAgent: "(github.com/jacaudi/nws test user-agent)",
 		Accept:    "application/ld+json",
 	})
 
 	// The current configuration can be retrieved as follows:
-	config := noaa.GetConfig()
+	config := nws.GetConfig()
 
 	fmt.Println("Config changed to:", config.BaseURL, config.UserAgent)
 
 	// Output:
-	// Config changed to: https://unplanned-hostname-change.com (github.com/icodealot/noaa test user-agent)
+	// Config changed to: https://unplanned-hostname-change.com (github.com/jacaudi/nws test user-agent)
 }
 
 func ExampleSetUserAgent() {
@@ -42,10 +42,10 @@ func ExampleSetUserAgent() {
 
 	// Set the user-agent field for your own application. For more information
 	// See Authentication located at: https://www.weather.gov/documentation/services-web-api
-	noaa.SetUserAgent("(myweatherapp.com, contact@myweatherapp.com)")
+	nws.SetUserAgent("(myweatherapp.com, contact@myweatherapp.com)")
 
 	// Get the current configuration:
-	config := noaa.GetConfig()
+	config := nws.GetConfig()
 
 	fmt.Println("User-Agent should now be:", config.UserAgent)
 
@@ -60,10 +60,10 @@ func ExampleSetUnits() {
 
 	// Set the units.
 	// Units can be set to "us" or "si" and otherwise, blank "" defaults to US units.
-	noaa.SetUnits("si")
+	nws.SetUnits("si")
 
 	// Get the current configuration:
-	config := noaa.GetConfig()
+	config := nws.GetConfig()
 
 	fmt.Println("Units should now be:", config.Units)
 
@@ -77,7 +77,7 @@ func ExampleGetChicagoForecast() {
 	beforeEachExample()
 
 	// Get the forecast for Chicago by lat/lon
-	forecast, err := noaa.Forecast("41.837", "-87.685")
+	forecast, err := nws.Forecast("41.837", "-87.685")
 	if err != nil {
 		fmt.Printf("Error getting the forecast: %v", err)
 		return
@@ -97,10 +97,10 @@ func ExampleGetChicagoForecastWithMetricUnits() {
 	// Cleanup global state before each example
 	beforeEachExample()
 
-	noaa.SetUnits("si")
+	nws.SetUnits("si")
 
 	// Get the forecast for Chicago by lat/lon
-	forecast, err := noaa.Forecast("41.837", "-87.685")
+	forecast, err := nws.Forecast("41.837", "-87.685")
 	if err != nil || forecast == nil {
 		fmt.Printf("Error getting the forecast: %v", err)
 		return
@@ -121,7 +121,7 @@ func ExampleGetChicagoHourlyForecast() {
 	beforeEachExample()
 
 	// Get the hourly forecast for Chicago by lat/lon
-	response, err := noaa.HourlyForecast("41.837", "-87.685")
+	response, err := nws.HourlyForecast("41.837", "-87.685")
 	if err != nil {
 		fmt.Printf("Error getting the forecast: %v", err)
 		return
@@ -142,7 +142,7 @@ func ExampleGetChicagoGridpointForecast() {
 	beforeEachExample()
 
 	// Get the gridpoint forecast for Chicago by lat/lon
-	response, err := noaa.GridpointForecast("41.837", "-87.685")
+	response, err := nws.GridpointForecast("41.837", "-87.685")
 	if err != nil {
 		fmt.Printf("Error getting the gridpoint forecast: %v", err)
 		return
@@ -161,7 +161,7 @@ func ExampleGetChicagoWeatherStations() {
 	beforeEachExample()
 
 	// Get the hourly forecast for Chicago by lat/lon
-	response, err := noaa.Stations("41.837", "-87.685")
+	response, err := nws.Stations("41.837", "-87.685")
 	if err != nil {
 		fmt.Printf("Error getting the stations: %v", err)
 		return
@@ -176,9 +176,9 @@ func ExampleGetChicagoWeatherStations() {
 	// Success!
 }
 
-// beforeEachExample is used to clean up the global state of the noaa client
+// beforeEachExample is used to clean up the global state of the nws client
 // which is necessary because some global state is set at the module level
 func beforeEachExample() {
 	// Reset the config for this example (cleanup from above examples)
-	noaa.SetConfig(noaa.GetDefaultConfig())
+	nws.SetConfig(nws.GetDefaultConfig())
 }
