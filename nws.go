@@ -93,6 +93,9 @@ func HourlyForecast(lat string, long string) (forecast *HourlyForecastResponse, 
 	return forecast, nil
 }
 
+// RadarStation returns the list of stations
+func RadarStationList()
+
 // Using the quantitative value feature flags to enable QV responses
 // causes the nws api to ignore the requested unit types. This also
 // populates fields that were previously populated for backward
