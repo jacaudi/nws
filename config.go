@@ -9,11 +9,12 @@ import (
 // Default values for the weather.gov REST API config which will
 // be replaced by Config. These are subject to deletion in the future.
 // Instead, use nws.GetConfig followed by:
-//     Config.BaseURL, Config.UserAgent, Config.Accept
+//
+//	Config.BaseURL, Config.UserAgent, Config.Accept
 const (
 	API       = "https://api.weather.gov"
-	APIKey    = "github.com/jacaudi/nws"    // User-Agent default value
-	APIAccept = "application/ld+json"       // Changes may affect struct mappings below
+	APIKey    = "github.com/jacaudi/nws" // User-Agent default value
+	APIAccept = "application/ld+json"    // Changes may affect struct mappings below
 )
 
 // Config instance for the API calls executed by the NWS client.
