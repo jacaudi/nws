@@ -1,6 +1,12 @@
-# nws [![GoDoc](https://godoc.org/github.com/jacaudi/nws?status.svg)](https://godoc.org/github.com/jacaudi/nws)
+# nws-go [![GoDoc](https://godoc.org/github.com/jacaudi/nws?status.svg)](https://godoc.org/github.com/jacaudi/nws)
 
-Go package for parts of the weather.gov API. The data provided by weather.gov
+## Origin
+
+This repo was cloned from [icodealot/noaa](https://github.com/icodealot/noaa) and will be used as the base for this new Go library
+
+## Purpose
+
+Go package for the National Weather Service API. The data provided by weather.gov
 is in the public domain and covers the continental United States. The service
 is maintained by the National Weather Service under the umbrella of the
 National Oceanic and Atmospheric Administration (NWS).
