@@ -220,16 +220,16 @@ type GridpointForecastResponse struct {
 // api.weather.gov/radar/stations
 // RadarStationListResponse holds the JSON values from /radar/stations
 type RadarStationListResponse struct {
-	Context  []interface{} `json:"@context"`
-	Type     string        `json:"type"`
+	Context  []interface{}             `json:"@context"`
+	Type     string                    `json:"type"`
 	Features []RadarStationListFeature `json:"features"`
 }
 
 // RadarStationListFeature represents an individual radar station feature
 type RadarStationListFeature struct {
-	ID         string              `json:"id"`
-	Type       string              `json:"type"`
-	Geometry   RadarStationGeometry `json:"geometry"`
+	ID         string                     `json:"id"`
+	Type       string                     `json:"type"`
+	Geometry   RadarStationGeometry       `json:"geometry"`
 	Properties RadarStationListProperties `json:"properties"`
 }
 
@@ -280,30 +280,30 @@ type Performance struct {
 
 // PerformanceProperties holds detailed performance properties
 type PerformanceProperties struct {
-	NtpStatus                   int       `json:"ntp_status"`
-	CommandChannel              string    `json:"commandChannel"`
-	RadomeAirTemperature        UnitValue `json:"radomeAirTemperature"`
-	TransitionalPowerSource      string    `json:"transitionalPowerSource"`
-	HorizontalShortPulseNoise   UnitValue `json:"horizontalShortPulseNoise"`
-	ElevationEncoderLight       string    `json:"elevationEncoderLight"`
-	HorizontalLongPulseNoise    UnitValue `json:"horizontalLongPulseNoise"`
-	AzimuthEncoderLight         string    `json:"azimuthEncoderLight"`
-	HorizontalNoiseTemperature  UnitValue `json:"horizontalNoiseTemperature"`
-	Linearity                   float64   `json:"linearity"`
-	TransmitterPeakPower        UnitValue `json:"transmitterPeakPower"`
-	HorizontalDeltadBZ0         UnitValue `json:"horizontalDeltadBZ0"`
-	TransmitterRecycleCount     int       `json:"transmitterRecycleCount"`
-	VerticalDeltadBZ0           UnitValue `json:"verticalDeltadBZ0"`
-	ReceiverBias                UnitValue `json:"receiverBias"`
-	ShortPulseHorizontaldBZ0    UnitValue `json:"shortPulseHorizontaldBZ0"`
-	TransmitterImbalance        UnitValue `json:"transmitterImbalance"`
-	LongPulseHorizontaldBZ0     UnitValue `json:"longPulseHorizontaldBZ0"`
-	PerformanceCheckTime        string    `json:"performanceCheckTime"`
+	NtpStatus                        int       `json:"ntp_status"`
+	CommandChannel                   string    `json:"commandChannel"`
+	RadomeAirTemperature             UnitValue `json:"radomeAirTemperature"`
+	TransitionalPowerSource          string    `json:"transitionalPowerSource"`
+	HorizontalShortPulseNoise        UnitValue `json:"horizontalShortPulseNoise"`
+	ElevationEncoderLight            string    `json:"elevationEncoderLight"`
+	HorizontalLongPulseNoise         UnitValue `json:"horizontalLongPulseNoise"`
+	AzimuthEncoderLight              string    `json:"azimuthEncoderLight"`
+	HorizontalNoiseTemperature       UnitValue `json:"horizontalNoiseTemperature"`
+	Linearity                        float64   `json:"linearity"`
+	TransmitterPeakPower             UnitValue `json:"transmitterPeakPower"`
+	HorizontalDeltadBZ0              UnitValue `json:"horizontalDeltadBZ0"`
+	TransmitterRecycleCount          int       `json:"transmitterRecycleCount"`
+	VerticalDeltadBZ0                UnitValue `json:"verticalDeltadBZ0"`
+	ReceiverBias                     UnitValue `json:"receiverBias"`
+	ShortPulseHorizontaldBZ0         UnitValue `json:"shortPulseHorizontaldBZ0"`
+	TransmitterImbalance             UnitValue `json:"transmitterImbalance"`
+	LongPulseHorizontaldBZ0          UnitValue `json:"longPulseHorizontaldBZ0"`
+	PerformanceCheckTime             string    `json:"performanceCheckTime"`
 	TransmitterLeavingAirTemperature UnitValue `json:"transmitterLeavingAirTemperature"`
-	ShelterTemperature          UnitValue `json:"shelterTemperature"`
-	PowerSource                 string    `json:"powerSource"`
-	DynamicRange                UnitValue `json:"dynamicRange"`
-	FuelLevel                   UnitValue `json:"fuelLevel"`
+	ShelterTemperature               UnitValue `json:"shelterTemperature"`
+	PowerSource                      string    `json:"powerSource"`
+	DynamicRange                     UnitValue `json:"dynamicRange"`
+	FuelLevel                        UnitValue `json:"fuelLevel"`
 }
 
 // Adaptation holds the adaptation-related data
