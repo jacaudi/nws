@@ -20,27 +20,27 @@ polling for updates.
 `nws` is a Go client for the weather.gov API and supports the following endpoints:
 
 ```go
-nws.Points(lat string, lon string) (points *PointsResponse, err error) {
+nws.Points(lat string, lon string) (points *PointsResponse, err error)
 ```
 
 ```go
-nws.Office(id string) (office *OfficeResponse, err error) {
+nws.Office(id string) (office *OfficeResponse, err error)
 ```
 
 ```go
-nws.Stations(lat string, lon string) (stations *StationsResponse, err error) {
+nws.Stations(lat string, lon string) (stations *StationsResponse, err error)
 ```
 
 ```go
-nws.Forecast(lat string, lon string) (forecast *ForecastResponse, err error) {
+nws.Forecast(lat string, lon string) (forecast *ForecastResponse, err error)
 ```
 
 ```go
-nws.GridpointForecast(lat string, lon string) (forecast *GridpointForecastResponse, err error) {
+nws.GridpointForecast(lat string, lon string) (forecast *GridpointForecastResponse, err error)
 ```
 
 ```go
-nws.HourlyForecast(lat string, long string) (forecast *HourlyForecastResponse, err error) {
+nws.HourlyForecast(lat string, long string) (forecast *HourlyForecastResponse, err error)
 ```
 
 For convenience, the ForecastResponse includes a reference to the PointsResponse
