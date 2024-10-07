@@ -12,7 +12,7 @@ import (
 //     Config.BaseURL, Config.UserAgent, Config.Accept
 const (
 	API       = "https://api.weather.gov"
-	APIKey    = "github.com/jacaudi/nws" // User-Agent default value
+	APIKey    = "github.com/jacaudi/nws"    // User-Agent default value
 	APIAccept = "application/ld+json"       // Changes may affect struct mappings below
 )
 
@@ -32,8 +32,9 @@ type Config struct {
 }
 
 const (
-	templateEndpointOffices = "%s/offices/%s"   // base url, office id
-	templateEndpointPoints  = "%s/points/%s,%s" // base url, lat, lon
+	templateEndpointOffices       = "%s/offices/%s"     // base url, office id
+	templateEndpointPoints        = "%s/points/%s,%s"   // base url, lat, lon
+	templateEndpointRadarStations = "%s/radar/stations" // base url
 )
 
 func (c *Config) endpointOffices(id string) string {
@@ -42,6 +43,10 @@ func (c *Config) endpointOffices(id string) string {
 
 func (c *Config) endpointPoints(lat string, lon string) string {
 	return fmt.Sprintf(templateEndpointPoints, config.BaseURL, lat, lon)
+}
+
+func (c *Config) endpointRadarStations() string {
+	return fmt.Sprintf(templateEndpointRadarStations, config.BaseURL)
 }
 
 func (c *Config) getUnitsQueryParam(prefix string) string {

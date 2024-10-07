@@ -7,7 +7,9 @@ import "fmt"
 
 // Cache used for point lookup to save some HTTP round trips
 // key is expected to be PointsResponse.ID
-var pointsCache = map[string]*PointsResponse{}
+var pointsCache  = map[string]*PointsResponse{}
+// key is expected to be PointsResponse.ID
+var stationCache = map[string]*RadarStationListResponse{}
 
 // Points returns a reference to a PointsResponse (cached if appropriate)
 // which contains useful nws endpoints for a given <lat,lon> to use in
@@ -93,8 +95,14 @@ func HourlyForecast(lat string, long string) (forecast *HourlyForecastResponse, 
 	return forecast, nil
 }
 
-// RadarStation returns the list of stations
-func RadarStationList()
+// RadarStationList returns the list of stations
+func RadarStationList() (radarStations *RadarStationListResponse, err error) {
+	endpoint := config.endpointRadarStations()
+	if err != nil {
+		return nil, err
+	}
+	return
+}
 
 // Using the quantitative value feature flags to enable QV responses
 // causes the nws api to ignore the requested unit types. This also
