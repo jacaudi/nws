@@ -12,6 +12,7 @@
 
 # IDE related files
 .idea/
+*.idea
 
 # Go Binary
 nws
