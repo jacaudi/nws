@@ -1,3 +1,3 @@
-module github.com/jacaudi/nws-go
+module nws-go
 
 go 1.22
