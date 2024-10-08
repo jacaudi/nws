@@ -1,9 +1,10 @@
 package nwsgo
 
+import "encoding/json"
+
 // api.weather.gov/radar/stations
 // RadarStationListResponse holds the JSON values from /radar/stations
 type RadarStationListResponse struct {
-	Context  []interface{}             `json:"@context"`
 	Type     string                    `json:"type"`
 	Features []RadarStationListFeature `json:"features"`
 }
@@ -18,21 +19,21 @@ type RadarStationListFeature struct {
 
 // RadarStationListProperties holds detailed properties of a radar station
 type RadarStationListProperties struct {
-	ID             string          `json:"@id"`
-	Type           string          `json:"@type"`
-	StationID      string          `json:"id"`
-	StationName    string          `json:"name"`
-	StationType    string          `json:"stationType"`
-	Elevation      Elevation       `json:"elevation"`
-	TimeZone       string          `json:"timeZone"`
-	Latency        Latency         `json:"latency"`
-	RDA            RDA             `json:"rda"`
+	ID          string    `json:"@id"`
+	Type        string    `json:"@type"`
+	StationID   string    `json:"id"`
+	StationName string    `json:"name"`
+	StationType string    `json:"stationType"`
+	Elevation   Elevation `json:"elevation"`
+	TimeZone    string    `json:"timeZone"`
+	Latency     Latency   `json:"latency"`
+	RDA         RDA       `json:"rda"`
 }
 
 // api.weather.gov/radar/stations/{stationId}
 // RadarStationResponse represents the radar station data
 type RadarStationResponse struct {
-	Context    []interface{}          `json:"@context"`
+	Context    json.RawMessage        `json:"@context"`
 	ID         string                 `json:"id"`
 	Type       string                 `json:"type"`
 	Geometry   RadarStationGeometry   `json:"geometry"`
@@ -41,17 +42,17 @@ type RadarStationResponse struct {
 
 // RadarStationProperties holds detailed properties for the radar station
 type RadarStationProperties struct {
-	ID                           string                 `json:"@id"`
-	Type                         string                 `json:"@type"`
-	StationID                    string                 `json:"id"`
-	Name                         string                 `json:"name"`
-	StationType                  string                 `json:"stationType"`
-	Elevation                    UnitValue              `json:"elevation"`
-	TimeZone                     string                 `json:"timeZone"`
-	Latency                      Latency                `json:"latency"`
-	RDA                          RDA                    `json:"rda"`
-	Performance                  Performance            `json:"performance"`
-	Adaptation                   Adaptation             `json:"adaptation"`
+	ID          string      `json:"@id"`
+	Type        string      `json:"@type"`
+	StationID   string      `json:"id"`
+	Name        string      `json:"name"`
+	StationType string      `json:"stationType"`
+	Elevation   UnitValue   `json:"elevation"`
+	TimeZone    string      `json:"timeZone"`
+	Latency     Latency     `json:"latency"`
+	RDA         RDA         `json:"rda"`
+	Performance Performance `json:"performance"`
+	Adaptation  Adaptation  `json:"adaptation"`
 }
 
 // Performance holds the performance-related information for the radar station
@@ -98,37 +99,37 @@ type Adaptation struct {
 
 // AdaptationProperties holds detailed adaptation properties
 type AdaptationProperties struct {
-	TransmitterFrequency                      UnitValue `json:"transmitterFrequency"`
-	PathLossWG04Circulator                    UnitValue `json:"pathLossWG04Circulator"`
-	AntennaGainIncludingRadome                UnitValue `json:"antennaGainIncludingRadome"`
-	PathLossA6ArcDetector                     UnitValue `json:"pathLossA6ArcDetector"`
-	CohoPowerAtA1J4                           UnitValue `json:"cohoPowerAtA1J4"`
-	AmeHorizontalTestSignalPower              UnitValue `json:"ameHorzizontalTestSignalPower"`
-	PathLossTransmitterCouplerCoupling        UnitValue `json:"pathLossTransmitterCouplerCoupling"`
-	StaloPowerAtA1J2                          UnitValue `json:"staloPowerAtA1J2"`
-	AmeNoiseSourceHorizontalExcessNoiseRatio  UnitValue `json:"ameNoiseSourceHorizontalExcessNoiseRatio"`
-	PathLossVerticalIFHeliaxTo4AT16           UnitValue `json:"pathLossVerticalIFHeliaxTo4AT16"`
-	PathLossAT4Attenuator                     UnitValue `json:"pathLossAT4Attenuator"`
-	PathLossHorzontalIFHeliaxTo4AT17          UnitValue `json:"pathLossHorzontalIFHeliaxTo4AT17"`
-	PathLossIFDRIFAntiAliasFilter             UnitValue `json:"pathLossIFDRIFAntiAliasFilter"`
-	PathLossIFDBurstAntiAliasFilter           UnitValue `json:"pathLossIFDBurstAntiAliasFilter"`
-	PathLossWG02HarmonicFilter                UnitValue `json:"pathLossWG02HarmonicFilter"`
-	TransmitterPowerDataWattsFactor           UnitValue `json:"transmitterPowerDataWattsFactor"`
-	PathLossWaveguideKlystronToSwitch         UnitValue `json:"pathLossWaveguideKlystronToSwitch"`
-	PulseWidthTransmitterOutputShortPulse     UnitValue `json:"pulseWidthTransmitterOutputShortPulse"`
-	PulseWidthTransmitterOutputLongPulse      UnitValue `json:"pulseWidthTransmitterOutputLongPulse"`
-	PathLossWG06SpectrumFilter                UnitValue `json:"pathLossWG06SpectrumFilter"`
-	HorizontalReceiverNoiseShortPulse         UnitValue `json:"horizontalReceiverNoiseShortPulse"`
-	HorizontalReceiverNoiseLongPulse          UnitValue `json:"horizontalReceiverNoiseLongPulse"`
-	TransmitterSpectrumFilterInstalled        string    `json:"transmitterSpectrumFilterInstalled"`
+	TransmitterFrequency                     UnitValue `json:"transmitterFrequency"`
+	PathLossWG04Circulator                   UnitValue `json:"pathLossWG04Circulator"`
+	AntennaGainIncludingRadome               UnitValue `json:"antennaGainIncludingRadome"`
+	PathLossA6ArcDetector                    UnitValue `json:"pathLossA6ArcDetector"`
+	CohoPowerAtA1J4                          UnitValue `json:"cohoPowerAtA1J4"`
+	AmeHorizontalTestSignalPower             UnitValue `json:"ameHorzizontalTestSignalPower"`
+	PathLossTransmitterCouplerCoupling       UnitValue `json:"pathLossTransmitterCouplerCoupling"`
+	StaloPowerAtA1J2                         UnitValue `json:"staloPowerAtA1J2"`
+	AmeNoiseSourceHorizontalExcessNoiseRatio UnitValue `json:"ameNoiseSourceHorizontalExcessNoiseRatio"`
+	PathLossVerticalIFHeliaxTo4AT16          UnitValue `json:"pathLossVerticalIFHeliaxTo4AT16"`
+	PathLossAT4Attenuator                    UnitValue `json:"pathLossAT4Attenuator"`
+	PathLossHorzontalIFHeliaxTo4AT17         UnitValue `json:"pathLossHorzontalIFHeliaxTo4AT17"`
+	PathLossIFDRIFAntiAliasFilter            UnitValue `json:"pathLossIFDRIFAntiAliasFilter"`
+	PathLossIFDBurstAntiAliasFilter          UnitValue `json:"pathLossIFDBurstAntiAliasFilter"`
+	PathLossWG02HarmonicFilter               UnitValue `json:"pathLossWG02HarmonicFilter"`
+	TransmitterPowerDataWattsFactor          UnitValue `json:"transmitterPowerDataWattsFactor"`
+	PathLossWaveguideKlystronToSwitch        UnitValue `json:"pathLossWaveguideKlystronToSwitch"`
+	PulseWidthTransmitterOutputShortPulse    UnitValue `json:"pulseWidthTransmitterOutputShortPulse"`
+	PulseWidthTransmitterOutputLongPulse     UnitValue `json:"pulseWidthTransmitterOutputLongPulse"`
+	PathLossWG06SpectrumFilter               UnitValue `json:"pathLossWG06SpectrumFilter"`
+	HorizontalReceiverNoiseShortPulse        UnitValue `json:"horizontalReceiverNoiseShortPulse"`
+	HorizontalReceiverNoiseLongPulse         UnitValue `json:"horizontalReceiverNoiseLongPulse"`
+	TransmitterSpectrumFilterInstalled       string    `json:"transmitterSpectrumFilterInstalled"`
 }
 
 // api.weather.gov//radar/stations/{stationId}/alarms
 // RadarStationAlarmResponse represents the response containing radar station alarms
 type RadarStationAlarmResponse struct {
-	Context  []interface{}       `json:"@context"`
-	ID       string              `json:"@id"`
-	Graph    []RadarStationAlarm `json:"@graph"`
+	Context json.RawMessage     `json:"@context"`
+	ID      string              `json:"@id"`
+	Graph   []RadarStationAlarm `json:"@graph"`
 }
 
 // RadarStationAlarm represents a single radar station alarm
@@ -167,25 +168,25 @@ type Latency struct {
 
 // RDA holds the Radar Data Acquisition (RDA) information of the radar station
 type RDA struct {
-	Timestamp     string       `json:"timestamp"`
-	ReportingHost string       `json:"reportingHost"`
+	Timestamp     string        `json:"timestamp"`
+	ReportingHost string        `json:"reportingHost"`
 	Properties    RDAProperties `json:"properties"`
 }
 
 // RDAProperties holds various operational properties of the RDA
 type RDAProperties struct {
-	ResolutionVersion                 *string    `json:"resolutionVersion"`
-	Nl2Path                           string     `json:"nl2Path"`
-	VolumeCoveragePattern             string     `json:"volumeCoveragePattern"`
-	ControlStatus                     string     `json:"controlStatus"`
-	BuildNumber                       float64    `json:"buildNumber"`
-	AlarmSummary                      string     `json:"alarmSummary"`
-	Mode                              string     `json:"mode"`
-	GeneratorState                    string     `json:"generatorState"`
-	SuperResolutionStatus             string     `json:"superResolutionStatus"`
-	OperabilityStatus                 string     `json:"operabilityStatus"`
-	Status                            string     `json:"status"`
-	AverageTransmitterPower           UnitValue  `json:"averageTransmitterPower"`
+	ResolutionVersion                 *string   `json:"resolutionVersion"`
+	Nl2Path                           string    `json:"nl2Path"`
+	VolumeCoveragePattern             string    `json:"volumeCoveragePattern"`
+	ControlStatus                     string    `json:"controlStatus"`
+	BuildNumber                       float64   `json:"buildNumber"`
+	AlarmSummary                      string    `json:"alarmSummary"`
+	Mode                              string    `json:"mode"`
+	GeneratorState                    string    `json:"generatorState"`
+	SuperResolutionStatus             string    `json:"superResolutionStatus"`
+	OperabilityStatus                 string    `json:"operabilityStatus"`
+	Status                            string    `json:"status"`
+	AverageTransmitterPower           UnitValue `json:"averageTransmitterPower"`
 	ReflectivityCalibrationCorrection UnitValue `json:"reflectivityCalibrationCorrection"`
 }
 
