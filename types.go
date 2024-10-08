@@ -17,6 +17,12 @@ type RadarStationListFeature struct {
 	Properties RadarStationListProperties `json:"properties"`
 }
 
+// RadarStationGeometry represents the geometry of a radar station
+type RadarStationGeometry struct {
+	Type        string    `json:"type"`
+	Coordinates []float64 `json:"coordinates"`
+}
+
 // RadarStationListProperties holds detailed properties of a radar station
 type RadarStationListProperties struct {
 	ID          string    `json:"@id"`
@@ -155,25 +161,31 @@ type Elevation struct {
 	Value    float64 `json:"value"`
 }
 
-// Latency represents the latency-related information of the radar station
+// Latency represents the latency details of a radar station
 type Latency struct {
-	Current                  UnitValue `json:"current"`
-	Average                  UnitValue `json:"average"`
-	Max                      UnitValue `json:"max"`
-	LevelTwoLastReceivedTime string    `json:"levelTwoLastReceivedTime"`
-	MaxLatencyTime           string    `json:"maxLatencyTime"`
-	ReportingHost            string    `json:"reportingHost"`
-	Host                     string    `json:"host"`
+	Current                  Measurement `json:"current"`
+	Average                  Measurement `json:"average"`
+	Max                      Measurement `json:"max"`
+	LevelTwoLastReceivedTime string      `json:"levelTwoLastReceivedTime"`
+	MaxLatencyTime           string      `json:"maxLatencyTime"`
+	ReportingHost            string      `json:"reportingHost"`
+	Host                     string      `json:"host"`
 }
 
-// RDA holds the Radar Data Acquisition (RDA) information of the radar station
+// Measurement represents a measurement with a unit code and value
+type Measurement struct {
+	UnitCode string  `json:"unitCode"`
+	Value    float64 `json:"value"`
+}
+
+// RDA represents the RDA details of a radar station
 type RDA struct {
 	Timestamp     string        `json:"timestamp"`
 	ReportingHost string        `json:"reportingHost"`
 	Properties    RDAProperties `json:"properties"`
 }
 
-// RDAProperties holds various operational properties of the RDA
+// RDAProperties represents the properties of the RDA
 type RDAProperties struct {
 	ResolutionVersion                 *string   `json:"resolutionVersion"`
 	Nl2Path                           string    `json:"nl2Path"`
