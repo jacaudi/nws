@@ -1,4 +1,4 @@
-package nws-go
+package nwsgo
 
 import (
 	"encoding/json"
@@ -23,7 +23,7 @@ type Config struct {
 func GetDefaultConfig() Config {
 	return Config{
 		BaseURL:   "https://api.weather.gov",
-		UserAgent: "github.com/jacaudi/nws-go",
+		UserAgent: "github.com/jacaudi/nwsgo",
 		Accept:    "application/ld+json",
 		Units:     "", // Defaults to US units if unspecified
 	}

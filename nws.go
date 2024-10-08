@@ -1,7 +1,7 @@
 // Package nws implements a basic wrapper around api.weather.gov to
 // grab HTTP responses to endpoints (i.e.: weather & forecast data)
 // by the National Weather Service, an agency of the United States.
-package nws-go
+package nwsgo
 
 // RadarStationList returns the list of radar stations.
 func RadarStationList() (*RadarStationListResponse, error) {

@@ -1,4 +1,4 @@
-package nws-go
+package nwsgo
 
 // api.weather.gov/radar/stations
 // RadarStationListResponse holds the JSON values from /radar/stations

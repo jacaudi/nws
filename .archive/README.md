@@ -1,4 +1,4 @@
-# nws-go [![GoDoc](https://godoc.org/github.com/jacaudi/nws?status.svg)](https://godoc.org/github.com/jacaudi/nws)
+# nwsgo [![GoDoc](https://godoc.org/github.com/jacaudi/nws?status.svg)](https://godoc.org/github.com/jacaudi/nws)
 
 ## Origin
 
