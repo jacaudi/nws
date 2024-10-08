@@ -7,7 +7,9 @@ import "fmt"
 
 // Cache used for point lookup to save some HTTP round trips
 // key is expected to be PointsResponse.ID
-var pointsCache = map[string]*PointsResponse{}
+var pointsCache  = map[string]*PointsResponse{}
+// key is expected to be PointsResponse.ID
+var stationCache = map[string]*RadarStationListResponse{}
 
 // Points returns a reference to a PointsResponse (cached if appropriate)
 // which contains useful nws endpoints for a given <lat,lon> to use in
@@ -91,6 +93,22 @@ func HourlyForecast(lat string, long string) (forecast *HourlyForecastResponse, 
 	forecast.Point = point
 	updateForecastPeriods(forecast.Periods)
 	return forecast, nil
+}
+
+// RadarStationList returns the list of stations
+func RadarStationList() (radarStations *RadarStationListResponse, err error) {
+	endpoint := config.endpointRadarStations()
+
+    // Initialize an empty RadarStationListResponse
+    radarStations = &RadarStationListResponse{}
+
+	// Use the decode function to decode the response into radarStations
+    err = decode(endpoint, radarStations)
+    if err != nil {
+        return nil, err
+    }
+
+    return radarStations, nil
 }
 
 // Using the quantitative value feature flags to enable QV responses

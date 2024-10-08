@@ -13,3 +13,6 @@
 # IDE related
 .vscode/
 .idea/
+
+# Go Binary
+nws
