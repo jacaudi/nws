@@ -6,7 +6,7 @@
         "vscode": {
             "settings": {
                 "go.gopath": "/go",
-                "go.useLanguageServer": true,
+                "go.useLanguageServer": true
             },
             "extensions": [
                 "golang.go",
