@@ -17,12 +17,6 @@ type RadarStationListFeature struct {
 	Properties RadarStationListProperties `json:"properties"`
 }
 
-// RadarStationGeometry represents the geometry of a radar station
-type RadarStationGeometry struct {
-	Type        string    `json:"type"`
-	Coordinates []float64 `json:"coordinates"`
-}
-
 // RadarStationListProperties holds detailed properties of a radar station
 type RadarStationListProperties struct {
 	ID          string    `json:"@id"`
