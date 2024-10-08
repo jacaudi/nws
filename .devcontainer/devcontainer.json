@@ -7,9 +7,11 @@
             "settings": {
                 "go.gopath": "/go",
                 "go.useLanguageServer": true,
-                "extensions": [
-                    "golang.go"
-                ]
+            },
+            "extensions": [
+                "golang.go",
+                "ms-vscode-remote.remote-containers"
+            ]
             }
         }
     },
