@@ -1,9 +1,9 @@
-package nwsgo
+import "encoding/json"
 
 // api.weather.gov/radar/stations
 // RadarStationListResponse holds the JSON values from /radar/stations
 type RadarStationListResponse struct {
-	Context  []interface{}             `json:"@context"`
+	Context  json.RawMessage           `json:"@context"`
 	Type     string                    `json:"type"`
 	Features []RadarStationListFeature `json:"features"`
 }
