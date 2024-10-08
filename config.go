@@ -1,4 +1,4 @@
-package nws
+package nws-go
 
 import (
 	"encoding/json"
