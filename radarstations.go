@@ -6,8 +6,11 @@ type RadarStationResponse struct {
 	Geometry    string      `json:"geometry"`
 	Name        string      `json:"name"`
 	TimeZone    string      `json:"timeZone"`
+	StationType string      `json:"stationType"`
+	Elevation   UnitValue   `json:"elevation"`
 	RDA         RDA         `json:"rda"`
 	Performance Performance `json:"performance"`
+	Latency     Latency     `json:"latency"`
 	Adaptation  Adaptation  `json:"adaptation"`
 }
 
@@ -96,6 +99,16 @@ type AdaptationProperties struct {
 	HorizontalReceiverNoiseShortPulse        UnitValue `json:"horizontalReceiverNoiseShortPulse"`
 	HorizontalReceiverNoiseLongPulse         UnitValue `json:"horizontalReceiverNoiseLongPulse"`
 	TransmitterSpectrumFilterInstalled       string    `json:"transmitterSpectrumFilterInstalled"`
+}
+
+type Latency struct {
+	Max                      UnitValue `json:"max"`
+	Average                  UnitValue `json:"average"`
+	Current                  UnitValue `json:"current"`
+	LevelTwoLastReceivedTime string    `json:"levelTwoLastReceivedTime"`
+	MaxLatencyTime           string    `json:"maxLatencyTime"`
+	ReportingHost            string    `json:"reportingHost"`
+	Host                     string    `json:"host"`
 }
 
 type UnitValue struct {
