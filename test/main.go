@@ -7,7 +7,7 @@ import (
 	"github.com/jacaudi/nwsgo"
 )
 
-var debug = true
+var debug = false
 
 func main() {
 	// Define the station ID for KATX

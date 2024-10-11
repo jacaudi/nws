@@ -12,7 +12,7 @@ import (
 )
 
 // Debug
-var debug = true
+var debug = false
 
 // GetRadarStation fetches the radar station details for a given station ID.
 func RadarStation(stationID string) (*RadarStationResponse, error) {
