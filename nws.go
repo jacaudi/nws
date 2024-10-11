@@ -5,38 +5,39 @@
 // by the National Weather Service, an agency of the United States.
 package nwsgo
 
-// RadarStationList returns the list of radar stations.
-func RadarStationList() (*RadarStationListResponse, error) {
-	endpoint := config.endpointRadarStations()
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+)
 
-	radarStations := &RadarStationListResponse{}
-	if err := config.GetAndDecode(endpoint, radarStations); err != nil {
-		return nil, err
-	}
-
-	return radarStations, nil
-}
-
-// RadarStation returns details for a single radar station by stationId.
+// GetRadarStation fetches the radar station details for a given station ID.
 func RadarStation(stationID string) (*RadarStationResponse, error) {
-	endpoint := config.endpointRadarStation(stationID)
-
-	radarStation := &RadarStationResponse{}
-	if err := config.GetAndDecode(endpoint, radarStation); err != nil {
+	url := config.endpointRadarStation(stationID)
+	body, err := config.MakeRequest(url)
+	if err != nil {
 		return nil, err
 	}
 
-	return radarStation, nil
-}
-
-// RadarStationAlarms returns alarm details for a radar station by stationId.
-func RadarStationAlarms(stationID string) (*RadarStationAlarmResponse, error) {
-	endpoint := config.endpointRadarStationAlarms(stationID)
-
-	radarAlarms := &RadarStationAlarmResponse{}
-	if err := config.GetAndDecode(endpoint, radarAlarms); err != nil {
-		return nil, err
+	if debug {
+		var prettyJSON map[string]interface{}
+		if err := json.Unmarshal(body, &prettyJSON); err == nil {
+			prettyBody, _ := json.MarshalIndent(prettyJSON, "", "  ")
+			log.Printf("\n-----------------------------\nPretty-printed response body:\n%s\n-----------------------------\n", string(prettyBody))
+		} else {
+			log.Printf("\n-----------------------------\nFailed to pretty-print response body:\n%s\n-----------------------------\n", err)
+		}
 	}
 
-	return radarAlarms, nil
+	var radarStation RadarStationResponse
+	err = json.Unmarshal(body, &radarStation)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	if debug {
+		log.Printf("\n-----------------------------\nParsed RadarStation:\n%+v\n-----------------------------\n", radarStation)
+	}
+
+	return &radarStation, nil
 }

@@ -1,12 +1,15 @@
 package nwsgo
 
 import (
-	"encoding/json"
-	"errors"
 	"fmt"
+	"io"
+	"log"
 	"net/http"
 	"strings"
 )
+
+// Debug
+var debug = true
 
 // Config instance for the API calls executed by the NWS client.
 var config = GetDefaultConfig()
@@ -29,37 +32,41 @@ func GetDefaultConfig() Config {
 	}
 }
 
-// Make a GET request and decode the response into the provided reference.
-func (c *Config) GetAndDecode(endpoint string, v any) error {
-	// Create and configure the HTTP request
-	req, err := http.NewRequest("GET", endpoint, nil)
+// MakeRequest makes an HTTP request to the NWS API and returns the response body.
+func (c *Config) MakeRequest(url string) ([]byte, error) {
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return err
+		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
-	req.Header.Add("Accept", c.Accept)
-	req.Header.Add("User-Agent", c.UserAgent)
-	req.Header.Add("feature-flags", "forecast_temperature_qv, forecast_wind_speed_qv")
+	req.Header.Set("User-Agent", c.UserAgent)
+	req.Header.Set("Accept", c.Accept)
 
-	// Send the HTTP request
-	res, err := http.DefaultClient.Do(req)
+	if debug {
+		log.Printf("Making request to URL: %s", url)
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
-		return err
+		return nil, fmt.Errorf("failed to make request: %w", err)
 	}
-	defer res.Body.Close()
+	defer resp.Body.Close()
 
-	// Check if the status code is OK
-	if res.StatusCode != http.StatusOK {
-		return errors.New(fmt.Sprintf("%d %s", res.StatusCode, res.Status))
-	}
-
-	// Decode the JSON response into the provided struct
-	decoder := json.NewDecoder(res.Body)
-	if err := decoder.Decode(v); err != nil {
-		return err
+	if debug {
+		log.Printf("Received response status: %s", resp.Status)
 	}
 
-	return nil
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response body: %w", err)
+	}
+
+	if debug {
+		log.Printf("Response body: %s", string(body))
+	}
+
+	return body, nil
 }
 
 // SetUserAgent changes the User-Agent header for API requests.
@@ -81,14 +88,6 @@ func (c *Config) SetUnits(units string) {
 }
 
 // Endpoints
-func (c *Config) endpointRadarStations() string {
-	return fmt.Sprintf("%s/radar/stations", c.BaseURL)
-}
-
 func (c *Config) endpointRadarStation(stationID string) string {
 	return fmt.Sprintf("%s/radar/stations/%s", c.BaseURL, stationID)
-}
-
-func (c *Config) endpointRadarStationAlarms(stationID string) string {
-	return fmt.Sprintf("%s/radar/stations/%s/alarms", c.BaseURL, stationID)
 }
