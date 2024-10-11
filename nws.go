@@ -11,6 +11,9 @@ import (
 	"log"
 )
 
+// Debug
+var debug = true
+
 // GetRadarStation fetches the radar station details for a given station ID.
 func RadarStation(stationID string) (*RadarStationResponse, error) {
 	url := config.endpointRadarStation(stationID)

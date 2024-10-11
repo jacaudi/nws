@@ -7,7 +7,7 @@ import (
 	"github.com/jacaudi/nwsgo"
 )
 
-var debug = false
+var debug = true
 
 func main() {
 	// Define the station ID for KATX
@@ -28,5 +28,5 @@ func main() {
 	volumeCoveragePattern := radarStation.RDA.Properties.VolumeCoveragePattern
 
 	// Print the VolumeCoveragePattern
-	fmt.Printf("VolumeCoveragePattern for station %s: %v\n", stationID, volumeCoveragePattern)
+	fmt.Printf("VCP for station %s: %v\n", stationID, volumeCoveragePattern)
 }

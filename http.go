@@ -8,9 +8,6 @@ import (
 	"strings"
 )
 
-// Debug
-var debug = true
-
 // Config instance for the API calls executed by the NWS client.
 var config = GetDefaultConfig()
 
