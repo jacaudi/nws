@@ -2,113 +2,113 @@ package nwsgo
 
 // RadarStationResponse represents the radar station details.
 type RadarStationResponse struct {
-	URL         string      `json:"@id"`
-	Geometry    string      `json:"geometry"`
-	Name        string      `json:"name"`
-	TimeZone    string      `json:"timeZone"`
-	StationType string      `json:"stationType"`
-	Elevation   UnitValue   `json:"elevation"`
-	RDA         RDA         `json:"rda"`
-	Performance Performance `json:"performance"`
-	Latency     Latency     `json:"latency"`
 	Adaptation  Adaptation  `json:"adaptation"`
+	Elevation   UnitValue   `json:"elevation"`
+	Geometry    string      `json:"geometry"`
+	Latency     Latency     `json:"latency"`
+	Name        string      `json:"name"`
+	Performance Performance `json:"performance"`
+	RDA         RDA         `json:"rda"`
+	StationType string      `json:"stationType"`
+	TimeZone    string      `json:"timeZone"`
+	URL         string      `json:"@id"`
 }
 
 type RDA struct {
-	Timestamp     string        `json:"timestamp"`
-	ReportingHost string        `json:"reportingHost"`
 	Properties    RDAProperties `json:"properties"`
+	ReportingHost string        `json:"reportingHost"`
+	Timestamp     string        `json:"timestamp"`
 }
 
 type RDAProperties struct {
-	VolumeCoveragePattern             string    `json:"volumeCoveragePattern"`
-	ResolutionVersion                 *string   `json:"resolutionVersion"` // Nullable field
-	Nl2Path                           string    `json:"nl2Path"`
-	ControlStatus                     string    `json:"controlStatus"`
-	BuildNumber                       float64   `json:"buildNumber"`
 	AlarmSummary                      string    `json:"alarmSummary"`
-	Mode                              string    `json:"mode"`
-	GeneratorState                    string    `json:"generatorState"`
-	SuperResolutionStatus             string    `json:"superResolutionStatus"`
-	OperabilityStatus                 string    `json:"operabilityStatus"`
-	Status                            string    `json:"status"`
 	AverageTransmitterPower           UnitValue `json:"averageTransmitterPower"`
+	BuildNumber                       float64   `json:"buildNumber"`
+	ControlStatus                     string    `json:"controlStatus"`
+	GeneratorState                    string    `json:"generatorState"`
+	Mode                              string    `json:"mode"`
+	Nl2Path                           string    `json:"nl2Path"`
+	OperabilityStatus                 string    `json:"operabilityStatus"`
 	ReflectivityCalibrationCorrection UnitValue `json:"reflectivityCalibrationCorrection"`
+	ResolutionVersion                 *string   `json:"resolutionVersion"` // Nullable field
+	Status                            string    `json:"status"`
+	SuperResolutionStatus             string    `json:"superResolutionStatus"`
+	VolumeCoveragePattern             string    `json:"volumeCoveragePattern"`
 }
 
 type Performance struct {
-	Timestamp     string                `json:"timestamp"`
-	ReportingHost string                `json:"reportingHost"`
 	Properties    PerformanceProperties `json:"properties"`
+	ReportingHost string                `json:"reportingHost"`
+	Timestamp     string                `json:"timestamp"`
 }
 
 type PerformanceProperties struct {
-	NtpStatus                        int       `json:"ntp_status"`
-	CommandChannel                   string    `json:"commandChannel"`
-	RadomeAirTemperature             UnitValue `json:"radomeAirTemperature"`
-	TransitionalPowerSource          string    `json:"transitionalPowerSource"`
-	HorizontalShortPulseNoise        UnitValue `json:"horizontalShortPulseNoise"`
-	ElevationEncoderLight            string    `json:"elevationEncoderLight"`
-	HorizontalLongPulseNoise         UnitValue `json:"horizontalLongPulseNoise"`
 	AzimuthEncoderLight              string    `json:"azimuthEncoderLight"`
-	HorizontalNoiseTemperature       UnitValue `json:"horizontalNoiseTemperature"`
-	Linearity                        float64   `json:"linearity"`
-	TransmitterPeakPower             UnitValue `json:"transmitterPeakPower"`
+	CommandChannel                   string    `json:"commandChannel"`
+	DynamicRange                     UnitValue `json:"dynamicRange"`
+	ElevationEncoderLight            string    `json:"elevationEncoderLight"`
+	FuelLevel                        UnitValue `json:"fuelLevel"`
 	HorizontalDeltadBZ0              UnitValue `json:"horizontalDeltadBZ0"`
+	HorizontalLongPulseNoise         UnitValue `json:"horizontalLongPulseNoise"`
+	HorizontalNoiseTemperature       UnitValue `json:"horizontalNoiseTemperature"`
+	HorizontalShortPulseNoise        UnitValue `json:"horizontalShortPulseNoise"`
+	Linearity                        float64   `json:"linearity"`
+	LongPulseHorizontaldBZ0          UnitValue `json:"longPulseHorizontaldBZ0"`
+	NtpStatus                        int       `json:"ntp_status"`
+	PerformanceCheckTime             string    `json:"performanceCheckTime"`
+	PowerSource                      string    `json:"powerSource"`
+	RadomeAirTemperature             UnitValue `json:"radomeAirTemperature"`
+	ReceiverBias                     UnitValue `json:"receiverBias"`
+	ShelterTemperature               UnitValue `json:"shelterTemperature"`
+	ShortPulseHorizontaldBZ0         UnitValue `json:"shortPulseHorizontaldBZ0"`
+	TransitionalPowerSource          string    `json:"transitionalPowerSource"`
+	TransmitterImbalance             UnitValue `json:"transmitterImbalance"`
+	TransmitterLeavingAirTemperature UnitValue `json:"transmitterLeavingAirTemperature"`
+	TransmitterPeakPower             UnitValue `json:"transmitterPeakPower"`
 	TransmitterRecycleCount          int       `json:"transmitterRecycleCount"`
 	VerticalDeltadBZ0                UnitValue `json:"verticalDeltadBZ0"`
-	ReceiverBias                     UnitValue `json:"receiverBias"`
-	ShortPulseHorizontaldBZ0         UnitValue `json:"shortPulseHorizontaldBZ0"`
-	TransmitterImbalance             UnitValue `json:"transmitterImbalance"`
-	LongPulseHorizontaldBZ0          UnitValue `json:"longPulseHorizontaldBZ0"`
-	PerformanceCheckTime             string    `json:"performanceCheckTime"`
-	TransmitterLeavingAirTemperature UnitValue `json:"transmitterLeavingAirTemperature"`
-	ShelterTemperature               UnitValue `json:"shelterTemperature"`
-	PowerSource                      string    `json:"powerSource"`
-	DynamicRange                     UnitValue `json:"dynamicRange"`
-	FuelLevel                        UnitValue `json:"fuelLevel"`
 }
 
 type Adaptation struct {
-	Timestamp     string               `json:"timestamp"`
-	ReportingHost string               `json:"reportingHost"`
 	Properties    AdaptationProperties `json:"properties"`
+	ReportingHost string               `json:"reportingHost"`
+	Timestamp     string               `json:"timestamp"`
 }
 
 type AdaptationProperties struct {
-	TransmitterFrequency                     UnitValue `json:"transmitterFrequency"`
-	PathLossWG04Circulator                   UnitValue `json:"pathLossWG04Circulator"`
-	AntennaGainIncludingRadome               UnitValue `json:"antennaGainIncludingRadome"`
-	PathLossA6ArcDetector                    UnitValue `json:"pathLossA6ArcDetector"`
-	CohoPowerAtA1J4                          UnitValue `json:"cohoPowerAtA1J4"`
 	AmeHorzizontalTestSignalPower            UnitValue `json:"ameHorzizontalTestSignalPower"`
-	PathLossTransmitterCouplerCoupling       UnitValue `json:"pathLossTransmitterCouplerCoupling"`
-	StaloPowerAtA1J2                         UnitValue `json:"staloPowerAtA1J2"`
 	AmeNoiseSourceHorizontalExcessNoiseRatio UnitValue `json:"ameNoiseSourceHorizontalExcessNoiseRatio"`
-	PathLossVerticalIFHeliaxTo4AT16          UnitValue `json:"pathLossVerticalIFHeliaxTo4AT16"`
+	AntennaGainIncludingRadome               UnitValue `json:"antennaGainIncludingRadome"`
+	CohoPowerAtA1J4                          UnitValue `json:"cohoPowerAtA1J4"`
+	HorizontalReceiverNoiseLongPulse         UnitValue `json:"horizontalReceiverNoiseLongPulse"`
+	HorizontalReceiverNoiseShortPulse        UnitValue `json:"horizontalReceiverNoiseShortPulse"`
+	PathLossA6ArcDetector                    UnitValue `json:"pathLossA6ArcDetector"`
 	PathLossAT4Attenuator                    UnitValue `json:"pathLossAT4Attenuator"`
 	PathLossHorzontalIFHeliaxTo4AT17         UnitValue `json:"pathLossHorzontalIFHeliaxTo4AT17"`
-	PathLossIFDRIFAntiAliasFilter            UnitValue `json:"pathLossIFDRIFAntiAliasFilter"`
 	PathLossIFDBurstAntiAliasFilter          UnitValue `json:"pathLossIFDBurstAntiAliasFilter"`
-	PathLossWG02HarmonicFilter               UnitValue `json:"pathLossWG02HarmonicFilter"`
-	TransmitterPowerDataWattsFactor          UnitValue `json:"transmitterPowerDataWattsFactor"`
+	PathLossIFDRIFAntiAliasFilter            UnitValue `json:"pathLossIFDRIFAntiAliasFilter"`
+	PathLossTransmitterCouplerCoupling       UnitValue `json:"pathLossTransmitterCouplerCoupling"`
+	PathLossVerticalIFHeliaxTo4AT16          UnitValue `json:"pathLossVerticalIFHeliaxTo4AT16"`
 	PathLossWaveguideKlystronToSwitch        UnitValue `json:"pathLossWaveguideKlystronToSwitch"`
-	PulseWidthTransmitterOutputShortPulse    UnitValue `json:"pulseWidthTransmitterOutputShortPulse"`
-	PulseWidthTransmitterOutputLongPulse     UnitValue `json:"pulseWidthTransmitterOutputLongPulse"`
+	PathLossWG02HarmonicFilter               UnitValue `json:"pathLossWG02HarmonicFilter"`
+	PathLossWG04Circulator                   UnitValue `json:"pathLossWG04Circulator"`
 	PathLossWG06SpectrumFilter               UnitValue `json:"pathLossWG06SpectrumFilter"`
-	HorizontalReceiverNoiseShortPulse        UnitValue `json:"horizontalReceiverNoiseShortPulse"`
-	HorizontalReceiverNoiseLongPulse         UnitValue `json:"horizontalReceiverNoiseLongPulse"`
+	PulseWidthTransmitterOutputLongPulse     UnitValue `json:"pulseWidthTransmitterOutputLongPulse"`
+	PulseWidthTransmitterOutputShortPulse    UnitValue `json:"pulseWidthTransmitterOutputShortPulse"`
+	StaloPowerAtA1J2                         UnitValue `json:"staloPowerAtA1J2"`
+	TransmitterFrequency                     UnitValue `json:"transmitterFrequency"`
+	TransmitterPowerDataWattsFactor          UnitValue `json:"transmitterPowerDataWattsFactor"`
 	TransmitterSpectrumFilterInstalled       string    `json:"transmitterSpectrumFilterInstalled"`
 }
 
 type Latency struct {
-	Max                      UnitValue `json:"max"`
 	Average                  UnitValue `json:"average"`
 	Current                  UnitValue `json:"current"`
+	Host                     string    `json:"host"`
 	LevelTwoLastReceivedTime string    `json:"levelTwoLastReceivedTime"`
+	Max                      UnitValue `json:"max"`
 	MaxLatencyTime           string    `json:"maxLatencyTime"`
 	ReportingHost            string    `json:"reportingHost"`
-	Host                     string    `json:"host"`
 }
 
 type UnitValue struct {
