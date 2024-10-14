@@ -17,7 +17,7 @@ var debug = false
 // GetRadarStation fetches the radar station details for a given station ID.
 func RadarStation(stationID string) (*RadarStationResponse, error) {
 	url := config.endpointRadarStation(stationID)
-	body, err := config.MakeRequest(url)
+	body, err := config.httpRequest(url)
 	if err != nil {
 		return nil, err
 	}
