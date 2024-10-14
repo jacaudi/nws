@@ -7,12 +7,24 @@ package nwsgo
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
 )
 
 // Debug
 var debug = false
+
+// GetRadarStation fetches the radar station details for a given station ID.
+func endpointRadarStations() (*RadarStationsResponse, error) {
+	url := config.endpointRadarStation()
+	body, err := config.httpRequest(url)
+	if err != nil {
+		return nil, err
+	}
+
+	var radarStations RadarStationsResponse
+	err = json.Unmarshal(body, &radarStations)
+
+	return &radarStations, nil
+}
 
 // GetRadarStation fetches the radar station details for a given station ID.
 func RadarStation(stationID string) (*RadarStationResponse, error) {
@@ -22,25 +34,8 @@ func RadarStation(stationID string) (*RadarStationResponse, error) {
 		return nil, err
 	}
 
-	if debug {
-		var prettyJSON map[string]interface{}
-		if err := json.Unmarshal(body, &prettyJSON); err == nil {
-			prettyBody, _ := json.MarshalIndent(prettyJSON, "", "  ")
-			log.Printf("\n-----------------------------\nPretty-printed response body:\n%s\n-----------------------------\n", string(prettyBody))
-		} else {
-			log.Printf("\n-----------------------------\nFailed to pretty-print response body:\n%s\n-----------------------------\n", err)
-		}
-	}
-
 	var radarStation RadarStationResponse
 	err = json.Unmarshal(body, &radarStation)
-	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
-	}
-
-	if debug {
-		log.Printf("\n-----------------------------\nParsed RadarStation:\n%+v\n-----------------------------\n", radarStation)
-	}
 
 	return &radarStation, nil
 }
