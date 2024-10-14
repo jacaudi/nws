@@ -8,6 +8,9 @@ import (
 	"strings"
 )
 
+// Show the HTTP response
+var httpResponse = false
+
 // Config instance for the API calls executed by the NWS client.
 var config = GetDefaultConfig()
 
@@ -29,8 +32,8 @@ func GetDefaultConfig() Config {
 	}
 }
 
-// MakeRequest makes an HTTP request to the NWS API and returns the response body.
-func (c *Config) MakeRequest(url string) ([]byte, error) {
+// httpRequest makes an HTTP request to the NWS API and returns the response body.
+func (c *Config) httpRequest(url string) ([]byte, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
@@ -50,7 +53,7 @@ func (c *Config) MakeRequest(url string) ([]byte, error) {
 	}
 	defer resp.Body.Close()
 
-	if debug {
+	if httpResponse {
 		log.Printf("Received response status: %s", resp.Status)
 	}
 
@@ -59,7 +62,7 @@ func (c *Config) MakeRequest(url string) ([]byte, error) {
 		return nil, fmt.Errorf("failed to read response body: %w", err)
 	}
 
-	if debug {
+	if httpResponse {
 		log.Printf("Response body: %s", string(body))
 	}
 
