@@ -1,8 +1,8 @@
-//https://www.weather.gov/documentation/services-web-api#/default/radar_stations
+//https://www.weather.gov/documentation/services-web-api
+// Package nws implements a basic wrapper around api.weather.gov to grab
+// HTTP responses to endpoints (i.e. forecast, alert and radar data) by
+// the National Weather Service, an agency of the United States.
 
-// Package nws implements a basic wrapper around api.weather.gov to
-// grab HTTP responses to endpoints (i.e.: weather & forecast data)
-// by the National Weather Service, an agency of the United States.
 package nwsgo
 
 import (
@@ -13,8 +13,8 @@ import (
 var debug = false
 
 // GetRadarStation fetches the radar station details for a given station ID.
-func endpointRadarStations() (*RadarStationsResponse, error) {
-	url := config.endpointRadarStation()
+func RadarStations() (*RadarStationsResponse, error) {
+	url := config.endpointRadarStations()
 	body, err := config.httpRequest(url)
 	if err != nil {
 		return nil, err
