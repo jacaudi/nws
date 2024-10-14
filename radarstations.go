@@ -2,6 +2,7 @@ package nwsgo
 
 // RadarStationResponse represents the radar station details.
 type RadarStationResponse struct {
+	Context     Context     `json:"@context"`
 	Adaptation  Adaptation  `json:"adaptation"`
 	Elevation   UnitValue   `json:"elevation"`
 	Geometry    string      `json:"geometry"`
@@ -12,6 +13,12 @@ type RadarStationResponse struct {
 	StationType string      `json:"stationType"`
 	TimeZone    string      `json:"timeZone"`
 	URL         string      `json:"@id"`
+}
+
+type Context struct {
+	Version string `json:"@version"`
+	WMOUnit string `json:"wmoUnit"`
+	NWSUnit string `json:"nwsUnit"`
 }
 
 type RDA struct {
