@@ -33,7 +33,7 @@ func main() {
 	if VCP == "R35" {
 		radarMode = "Clear Air Mode"
 	} else if VCP == "R215" {
-		radarMode = "Precipatation Mode"
+		radarMode = "Precipitation Mode"
 	} else {
 		radarMode = "Unknown Mode -- Please Update Code"
 	}
