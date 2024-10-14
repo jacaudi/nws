@@ -27,6 +27,7 @@ func main() {
 
 	// Extract the Values from the radar station details
 	VCP := radarStation.RDA.Properties.VolumeCoveragePattern
+	name := radarStation.Name
 	version := radarStation.Context.Version
 	Status := radarStation.RDA.Properties.Mode
 
@@ -39,9 +40,9 @@ func main() {
 	}
 
 	// Print the VolumeCoveragePattern
-	fmt.Printf("Radar Site: %s\n", stationID)
-	fmt.Printf("Radar Mode: %s\n", radarMode)
-	fmt.Printf("Radar Status: %s\n", Status)
+	fmt.Printf("Radar Site: %s - %s\n", stationID, name)
+	fmt.Printf("Volume Coverage Pattern: %s - %s\n", VCP, radarMode)
+	fmt.Printf("Status: %s\n", Status)
 	if debug {
 		fmt.Printf("Version: %s\n", version)
 	}
