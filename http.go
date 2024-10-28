@@ -26,7 +26,7 @@ type Config struct {
 func GetDefaultConfig() Config {
 	return Config{
 		BaseURL:   "https://api.weather.gov",
-		UserAgent: "github.com/jacaudi/nwsgo",
+		UserAgent: "nwsgo/0.0.2 (+https://github.com/jacaudi/nwsgo)",
 		Accept:    "application/ld+json",
 		Units:     "", // Defaults to US units if unspecified
 	}
