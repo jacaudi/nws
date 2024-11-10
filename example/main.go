@@ -3,12 +3,16 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
+	"strconv"
 
 	"github.com/jacaudi/nwsgo"
 )
 
-var debug = false
-var radarMode = ""
+var (
+	debug, _  = strconv.ParseBool(os.Getenv("DEBUG"))
+	radarMode = ""
+)
 
 func main() {
 	// Define the Lat & Lon
@@ -17,6 +21,10 @@ func main() {
 	pointData, err := nwsgo.GetPoints(latlon)
 	if err != nil {
 		log.Fatalf("Failed to get data from GPS location: %v", err)
+	}
+
+	if debug {
+		log.Printf("Points Endpoint Response: %v\n\n", pointData)
 	}
 
 	stationID := pointData.RadarStation
@@ -29,7 +37,7 @@ func main() {
 
 	// Print the entire radarStation object for debugging
 	if debug {
-		fmt.Printf("RadarStation details: %+v\n", radarStation)
+		fmt.Printf("RadarStation details: %+v\n\n", radarStation)
 	}
 
 	// Extract the Values from the radar station details
