@@ -11,8 +11,15 @@ var debug = false
 var radarMode = ""
 
 func main() {
-	// Define the station ID for KATX
-	stationID := "KATX"
+	// Define the Lat & Lon
+	latlon := "47.445259,-122.294533"
+
+	pointData, err := nwsgo.GetPoints(latlon)
+	if err != nil {
+		log.Fatalf("Failed to get data from GPS location: %v", err)
+	}
+
+	stationID := pointData.RadarStation
 
 	// Get the radar station details for KATX
 	radarStation, err := nwsgo.RadarStation(stationID)

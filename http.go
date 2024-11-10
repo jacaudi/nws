@@ -88,10 +88,14 @@ func (c *Config) SetUnits(units string) {
 }
 
 // Endpoints
+func (c *Config) endpointPoints(latlon string) string {
+	return fmt.Sprintf("%s/points/%s", c.BaseURL, latlon)
+}
+
 func (c *Config) endpointRadarStations() string {
 	return fmt.Sprintf("%s/radar/stations", c.BaseURL)
 }
 
 func (c *Config) endpointRadarStation(stationID string) string {
-	return fmt.Sprintf("%s/radar/station/%s", c.BaseURL, stationID)
+	return fmt.Sprintf("%s/radar/stations/%s", c.BaseURL, stationID)
 }
