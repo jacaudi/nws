@@ -10,7 +10,21 @@ import (
 )
 
 // Debug
-var debug = false
+var debug = true
+
+// GetRadarStation fetches the radar station details for a given station ID.
+func GetPoints(latlon string) (*PointsResponse, error) {
+	url := config.endpointPoints(latlon)
+	body, err := config.httpRequest(url)
+	if err != nil {
+		return nil, err
+	}
+
+	var pointData PointsResponse
+	err = json.Unmarshal(body, &pointData)
+
+	return &pointData, nil
+}
 
 // GetRadarStation fetches the radar station details for a given station ID.
 func RadarStations() (*RadarStationsResponse, error) {
