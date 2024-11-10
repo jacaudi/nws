@@ -10,7 +10,7 @@ import (
 )
 
 // Debug
-var debug = true
+var debug = false
 
 // GetRadarStation fetches the radar station details for a given station ID.
 func GetPoints(latlon string) (*PointsResponse, error) {
