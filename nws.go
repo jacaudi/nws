@@ -9,6 +9,8 @@ import (
 	"encoding/json"
 
 	_ "github.com/jacaudi/nwsgo/client"
+	_ "github.com/jacaudi/nwsgo/endpoints/points"
+	_ "github.com/jacaudi/nwsgo/endpoints/radar"
 )
 
 // Debug

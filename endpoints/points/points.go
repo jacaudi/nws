@@ -1,4 +1,6 @@
-package nwsgo
+package points
+
+// https://www.weather.gov/documentation/services-web-api#/default/point
 
 // ForecastData is a custom struct type for storing forecast data for a specific location.
 type PointsResponse struct {
