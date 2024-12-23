@@ -16,7 +16,9 @@ polling for updates.
 `nws` is a Go client for the weather.gov API and supports the following endpoints:
 
 ```go
-nws.RadarStation(stationID string) // Radar Station Details
+nwsgo.GetPoints(latlon string) // Get NWS Data at that point
+nwsgo.RadarStations() // All Radar Sites -- Station Details
+nwsgo.RadarStation(stationID string) // Radar Station Details
 ```
 
 

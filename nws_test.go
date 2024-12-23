@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+
+	"github.com/jacaudi/nwsgo/internal/endpoints/radar"
 )
 
 func TestRadarStation(t *testing.T) {
 	// Test case 1: Successful response
 	stationID := "KATX"
-	expectedResponse := &RadarStationResponse{
+	expectedResponse := &radar.RadarStationResponse{
 		// Define the expected response here
 	}
 	response, err := RadarStation(stationID)
