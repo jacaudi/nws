@@ -1,18 +1,11 @@
-package config
+package client
 
 import (
 	"fmt"
 	"io"
 	"log"
 	"net/http"
-	"strings"
 )
-
-// Show the HTTP response
-var httpResponse = false
-
-// Config instance for the API calls executed by the NWS client.
-var config = GetDefaultConfig()
 
 // Config describes important values for the NWS API and handles making HTTP requests.
 type Config struct {
@@ -33,14 +26,25 @@ func GetDefaultConfig() Config {
 }
 
 // httpRequest makes an HTTP request to the NWS API and returns the response body.
-func (c *Config) httpRequest(url string) ([]byte, error) {
+func httpRequest(url string, agent string, accept string, units string, debug bool) ([]byte, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
-	req.Header.Set("User-Agent", c.UserAgent)
-	req.Header.Set("Accept", c.Accept)
+	req.Header.Set("Accept", accept)
+
+	if len(agent) == 0 {
+		log.Panicf("The NWS API requires a User-Agent")
+	} else {
+		req.Header.Set("User-Agent", agent)
+	}
+
+	if len(units) == 0 {
+		req.Header.Set("Units", "") // Defaults to US units if unspecified
+	} else {
+		req.Header.Set("Units", units)
+	}
 
 	if debug {
 		log.Printf("Making request to URL: %s", url)
@@ -53,7 +57,7 @@ func (c *Config) httpRequest(url string) ([]byte, error) {
 	}
 	defer resp.Body.Close()
 
-	if httpResponse {
+	if debug {
 		log.Printf("Received response status: %s", resp.Status)
 	}
 
@@ -62,29 +66,11 @@ func (c *Config) httpRequest(url string) ([]byte, error) {
 		return nil, fmt.Errorf("failed to read response body: %w", err)
 	}
 
-	if httpResponse {
+	if debug {
 		log.Printf("Response body: %s", string(body))
 	}
 
 	return body, nil
-}
-
-// SetUserAgent changes the User-Agent header for API requests.
-func (c *Config) SetUserAgent(userAgent string) {
-	if len(userAgent) == 0 {
-		panic("The API requires a User-Agent")
-	}
-	c.UserAgent = userAgent
-}
-
-// SetUnits changes the unit system (US or SI) for API requests.
-func (c *Config) SetUnits(units string) {
-	units = strings.ToLower(units)
-	if units != "us" && units != "si" {
-		c.Units = ""
-	} else {
-		c.Units = units
-	}
 }
 
 // Endpoints
