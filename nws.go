@@ -7,6 +7,8 @@ package nwsgo
 
 import (
 	"encoding/json"
+
+	_ "github.com/jacaudi/nwsgo/client"
 )
 
 // Debug

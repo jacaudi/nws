@@ -1,4 +1,4 @@
-package nwsgo
+package config
 
 import (
 	"fmt"
