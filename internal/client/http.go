@@ -7,24 +7,6 @@ import (
 	"net/http"
 )
 
-// Config describes important values for the NWS API and handles making HTTP requests.
-type Config struct {
-	BaseURL   string `json:"baseUrl"` // Do not include a trailing slash
-	UserAgent string `json:"userAgent"`
-	Accept    string `json:"accept"`
-	Units     string `json:"units"`
-}
-
-// GetDefaultConfig returns the default configuration for the weather.gov API.
-func GetDefaultConfig() Config {
-	return Config{
-		BaseURL:   "https://api.weather.gov",
-		UserAgent: "nwsgo/0.0.2 (+https://github.com/jacaudi/nwsgo)",
-		Accept:    "application/ld+json",
-		Units:     "", // Defaults to US units if unspecified
-	}
-}
-
 // httpRequest makes an HTTP request to the NWS API and returns the response body.
 func httpRequest(url string, agent string, accept string, units string, debug bool) ([]byte, error) {
 	req, err := http.NewRequest("GET", url, nil)
@@ -48,6 +30,9 @@ func httpRequest(url string, agent string, accept string, units string, debug bo
 
 	if debug {
 		log.Printf("Making request to URL: %s", url)
+		log.Printf("Header: %s", accept)
+		log.Printf("Header: %s", agent)
+		log.Printf("Header: %s", units)
 	}
 
 	client := &http.Client{}
