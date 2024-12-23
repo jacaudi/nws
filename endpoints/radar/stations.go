@@ -1,6 +1,8 @@
-package stations
+package radar
 
 // RadarStationsResponse represents the details of all the sites.
+// https://www.weather.gov/documentation/services-web-api#/default/radar_stations
+
 type RadarStationsResponse struct {
 	Adaptation  Adaptation  `json:"adaptation"`
 	Context     Context     `json:"@context"`
