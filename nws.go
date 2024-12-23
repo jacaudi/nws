@@ -8,16 +8,16 @@ package nwsgo
 import (
 	"encoding/json"
 
-	_ "github.com/jacaudi/nwsgo/client"
-	_ "github.com/jacaudi/nwsgo/endpoints/points"
-	_ "github.com/jacaudi/nwsgo/endpoints/radar"
+	_ "github.com/jacaudi/nwsgo/internal/client"
+	_ "github.com/jacaudi/nwsgo/internal/endpoints/points"
+	_ "github.com/jacaudi/nwsgo/internal/endpoints/radar"
 )
 
 // Debug
 var debug = false
 
 // GetRadarStation fetches the radar station details for a given station ID.
-func GetPoints(latlon string) (*PointsResponse, error) {
+func GetPoints(latlon string) (*poiPointsResponse, error) {
 	url := config.endpointPoints(latlon)
 	body, err := config.httpRequest(url)
 	if err != nil {
