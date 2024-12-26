@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/jacaudi/nwsgo/internal/endpoints/alerts"
 	"github.com/jacaudi/nwsgo/internal/endpoints/gridpoints"
 	"github.com/jacaudi/nwsgo/internal/endpoints/points"
 	"github.com/jacaudi/nwsgo/internal/endpoints/radar"
@@ -75,4 +76,19 @@ func GetForecast(wfo string, gridpoint string) (*gridpoints.ForecastResponse, er
 		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
 	}
 	return &ForecastResponse, nil
+}
+
+// GetForecast fetches the forecast details for a given Lat/Lon.
+func GetActiveAlerts() (*alerts.ActiveAlertsResponse, error) {
+	url := config.endpointActiveAlerts()
+	response, err := config.httpRequest(url)
+	if err != nil {
+		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
+	}
+	var ActiveAlertsResponse alerts.ActiveAlertsResponse
+	err = json.Unmarshal(response, &ActiveAlertsResponse)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+	return &ActiveAlertsResponse, nil
 }

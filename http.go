@@ -9,7 +9,7 @@ import (
 )
 
 // Show the HTTP response
-var httpResponse = false
+var httpResponse = true
 
 // Config instance for the API calls executed by the NWS client.
 var config = GetDefaultConfig()
@@ -102,4 +102,8 @@ func (c *Config) endpointRadarStation(stationID string) string {
 
 func (c *Config) endpointGridForecast(wfo string, gridpoint string) string {
 	return fmt.Sprintf("%s/gridpoints/%s/%s/forecast", c.BaseURL, wfo, gridpoint)
+}
+
+func (c *Config) endpointActiveAlerts() string {
+	return fmt.Sprintf("%s/alerts/active?limit=1", c.BaseURL)
 }
