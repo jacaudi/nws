@@ -5,11 +5,15 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 )
 
 // Show the HTTP response
-var httpResponse = true
+var httpResponse = false
+
+// httpLog is a boolean variable that determines whether HTTP logging is enabled or disabled.
+var httpLog = false
 
 // Config instance for the API calls executed by the NWS client.
 var config = GetDefaultConfig()
@@ -64,6 +68,17 @@ func (c *Config) httpRequest(url string) ([]byte, error) {
 
 	if httpResponse {
 		log.Printf("Response body: %s", string(body))
+		if httpLog {
+			// Write log output to a file
+			logFile, err := os.OpenFile("HTTP_Response.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+			if err != nil {
+				return nil, fmt.Errorf("failed to open log file: %w", err)
+			}
+			defer logFile.Close()
+
+			log.SetOutput(io.MultiWriter(os.Stdout, logFile))
+			log.Println(string(body))
+		}
 	}
 
 	return body, nil
@@ -105,5 +120,5 @@ func (c *Config) endpointGridForecast(wfo string, gridpoint string) string {
 }
 
 func (c *Config) endpointActiveAlerts() string {
-	return fmt.Sprintf("%s/alerts/active?limit=1", c.BaseURL)
+	return fmt.Sprintf("%s/alerts/active", c.BaseURL)
 }

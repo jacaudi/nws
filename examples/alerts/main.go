@@ -10,8 +10,7 @@ import (
 )
 
 var (
-	debug, _  = strconv.ParseBool(os.Getenv("DEBUG"))
-	radarMode = ""
+	debug, _ = strconv.ParseBool(os.Getenv("DEBUG"))
 )
 
 func main() {
@@ -21,11 +20,13 @@ func main() {
 		log.Fatalf("Failed to get radar station details: %v", err)
 	}
 
-	// Print the entire radarStation object for debugging
+	// Print the entire activeAlerts object for debugging
 	if debug {
 		fmt.Printf("Active Alert Details: %+v\n\n", activeAlerts)
 	}
 
-	// Print the VolumeCoveragePattern
-	fmt.Printf("ALERTS: %s\n", activeAlerts)
+	firstAlertDesc := activeAlerts.Data[0].Description
+
+	// Print the Description of the First Alert Returned
+	fmt.Printf("***-----ALERT EXAMPLE-----***\n%s\n***END***\n", firstAlertDesc)
 }
