@@ -17,3 +17,6 @@
 
 # Go Binary
 nws
+
+# Random logging files
+*.log
