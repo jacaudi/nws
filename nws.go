@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/jacaudi/nwsgo/internal/endpoints/gridpoints"
 	"github.com/jacaudi/nwsgo/internal/endpoints/points"
 	"github.com/jacaudi/nwsgo/internal/endpoints/radar"
 )
@@ -16,7 +17,7 @@ import (
 // Debug
 var debug = true
 
-// GetRadarStation fetches the radar station details for a given station ID.
+// GetPoints grabs NWS data at the following Lat/Lon coordinates
 func GetPoints(latlon string) (*points.PointsResponse, error) {
 	url := config.endpointPoints(latlon)
 	response, err := config.httpRequest(url)
@@ -59,4 +60,19 @@ func RadarStation(stationID string) (*radar.RadarStationResponse, error) {
 		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
 	}
 	return &radarStationResponse, nil
+}
+
+// GetForecast fetches the forecast details for a given Lat/Lon.
+func GetForecast(wfo string, gridpoint string) (*gridpoints.ForecastResponse, error) {
+	url := config.endpointGridForecast(wfo, gridpoint)
+	response, err := config.httpRequest(url)
+	if err != nil {
+		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
+	}
+	var ForecastResponse gridpoints.ForecastResponse
+	err = json.Unmarshal(response, &ForecastResponse)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+	return &ForecastResponse, nil
 }

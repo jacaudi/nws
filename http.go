@@ -99,3 +99,7 @@ func (c *Config) endpointRadarStations() string {
 func (c *Config) endpointRadarStation(stationID string) string {
 	return fmt.Sprintf("%s/radar/stations/%s", c.BaseURL, stationID)
 }
+
+func (c *Config) endpointGridForecast(wfo string, gridpoint string) string {
+	return fmt.Sprintf("%s/gridpoints/%s/%s/forecast", c.BaseURL, wfo, gridpoint)
+}
