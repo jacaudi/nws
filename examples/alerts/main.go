@@ -37,8 +37,7 @@ func main() {
 		if len(alert.Parameters.VTEC) == 0 {
 			continue
 		}
-		vtec := fmt.Sprintf("VTEC of Alert %02d: %s\n", count+1, alert.Parameters.VTEC)
-		fmt.Printf(vtec)
+		fmt.Printf("VTEC of Alert %02d: %s\n", count+1, alert.Parameters.VTEC)
 		count++
 	}
 
