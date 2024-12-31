@@ -13,6 +13,7 @@ import (
 	"github.com/jacaudi/nwsgo/internal/endpoints/gridpoints"
 	"github.com/jacaudi/nwsgo/internal/endpoints/points"
 	"github.com/jacaudi/nwsgo/internal/endpoints/radar"
+	"github.com/jacaudi/nwsgo/internal/endpoints/stations"
 )
 
 // Debug
@@ -91,4 +92,18 @@ func GetActiveAlerts() (*alerts.ActiveAlertsResponse, error) {
 		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
 	}
 	return &ActiveAlertsResponse, nil
+}
+
+func GetLatestObservations(stationID string) (*stations.LatestObservationsResponse, error) {
+	url := config.endpointLatestObservations(stationID)
+	response, err := config.httpRequest(url, debug)
+	if err != nil {
+		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
+	}
+	var LatestObservationsResponse stations.LatestObservationsResponse
+	err = json.Unmarshal(response, &LatestObservationsResponse)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+	return &LatestObservationsResponse, nil
 }

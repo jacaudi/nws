@@ -83,3 +83,7 @@ func (c *Config) endpointGridForecast(wfo string, gridpoint string) string {
 func (c *Config) endpointActiveAlerts() string {
 	return fmt.Sprintf("%s/alerts/active", c.BaseURL)
 }
+
+func (c *Config) endpointLatestObservations(stationID string) string {
+	return fmt.Sprintf("%s/stations/%s/observations/latest", c.BaseURL, stationID)
+}
