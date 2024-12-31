@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/jacaudi/nwsgo"
+	"github.com/jacaudi/nwsgo/cmd/nwsgo"
 )
 
 var (
