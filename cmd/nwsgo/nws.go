@@ -16,12 +16,12 @@ import (
 )
 
 // Debug
-var debug = true
+var debug = false
 
 // GetPoints grabs NWS data at the following Lat/Lon coordinates
 func GetPoints(latlon string) (*points.PointsResponse, error) {
 	url := config.endpointPoints(latlon)
-	response, err := config.httpRequest(url)
+	response, err := config.httpRequest(url, debug)
 	if err != nil {
 		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
 	}
@@ -36,7 +36,7 @@ func GetPoints(latlon string) (*points.PointsResponse, error) {
 // GetRadarStation fetches the radar station details for a given station ID.
 func RadarStations() (*radar.RadarStationsResponse, error) {
 	url := config.endpointRadarStations()
-	response, err := config.httpRequest(url)
+	response, err := config.httpRequest(url, debug)
 	if err != nil {
 		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
 	}
@@ -51,7 +51,7 @@ func RadarStations() (*radar.RadarStationsResponse, error) {
 // RadarStation fetches the radar station details for a given station ID.
 func RadarStation(stationID string) (*radar.RadarStationResponse, error) {
 	url := config.endpointRadarStation(stationID)
-	response, err := config.httpRequest(url)
+	response, err := config.httpRequest(url, debug)
 	if err != nil {
 		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
 	}
@@ -66,7 +66,7 @@ func RadarStation(stationID string) (*radar.RadarStationResponse, error) {
 // GetForecast fetches the forecast details for a given Lat/Lon.
 func GetForecast(wfo string, gridpoint string) (*gridpoints.ForecastResponse, error) {
 	url := config.endpointGridForecast(wfo, gridpoint)
-	response, err := config.httpRequest(url)
+	response, err := config.httpRequest(url, debug)
 	if err != nil {
 		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
 	}
@@ -81,7 +81,7 @@ func GetForecast(wfo string, gridpoint string) (*gridpoints.ForecastResponse, er
 // GetForecast fetches the forecast details for a given Lat/Lon.
 func GetActiveAlerts() (*alerts.ActiveAlertsResponse, error) {
 	url := config.endpointActiveAlerts()
-	response, err := config.httpRequest(url)
+	response, err := config.httpRequest(url, debug)
 	if err != nil {
 		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
 	}
