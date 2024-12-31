@@ -43,12 +43,12 @@ func main() {
 	// Get the observation details for KSEA
 	obs, err := nwsgo.GetLatestObservations(stationID)
 	if err != nil {
-		log.Fatalf("Failed to get radar station details: %v", err)
+		log.Fatalf("Failed to get observation station details: %v", err)
 	}
 
 	// Print the entire observationresponse object for debugging
 	if debug {
-		fmt.Printf("RadarStation details: %+v\n\n", obs)
+		fmt.Printf("Observation Details: %+v\n\n", obs)
 	}
 
 	// Obtain the values
