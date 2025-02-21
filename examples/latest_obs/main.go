@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/jacaudi/nws/cmd/nws"
 )
@@ -38,7 +40,15 @@ func convertUnit(unitCode string) string {
 // converts the temperature and dew point values to Fahrenheit,
 // and prints the station ID, temperature, dew point, and pressure.
 func main() {
-	stationID := "KSEA"
+	reader := bufio.NewReader(os.Stdin)
+
+	// Prompt for URL
+	fmt.Print("Enter the Station ID: ")
+	stationID, _ := reader.ReadString('\n')
+	stationID = strings.TrimSpace(stationID)
+	if stationID == "" {
+		log.Fatal("Station ID cannot be empty")
+	}
 
 	// Get the observation details for KSEA
 	obs, err := nws.GetLatestObservations(stationID)
