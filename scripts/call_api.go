@@ -15,7 +15,7 @@ func callAPI() {
 	reader := bufio.NewReader(os.Stdin)
 
 	// Prompt for URL
-	fmt.Print("Enter the URL: ")
+	fmt.Print("Enter the NWS API URL: ")
 	url, _ := reader.ReadString('\n')
 	url = strings.TrimSpace(url)
 
