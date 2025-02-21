@@ -17,7 +17,7 @@ func main() {
 
 	activeAlerts, err := nws.GetActiveAlerts()
 	if err != nil {
-		log.Fatalf("Failed to get radar station details: %v", err)
+		log.Fatalf("Failed to get alert details: %v", err)
 	}
 
 	// Print the entire activeAlerts object for debugging
