@@ -1,8 +1,6 @@
 # nws
 
-## Purpose
-
-Go package for the National Weather Service API. The data provided by weather.gov
+A Go library package for the National Weather Service API. The data provided by weather.gov
 is in the public domain and covers the continental United States. The service
 is maintained by the National Weather Service under the umbrella of the
 National Oceanic and Atmospheric Administration (NWS).
