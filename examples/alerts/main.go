@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/jacaudi/nwsgo/cmd/nwsgo"
+	"github.com/jacaudi/nws/cmd/nws"
 )
 
 var (
@@ -15,7 +15,7 @@ var (
 
 func main() {
 
-	activeAlerts, err := nwsgo.GetActiveAlerts()
+	activeAlerts, err := nws.GetActiveAlerts()
 	if err != nil {
 		log.Fatalf("Failed to get radar station details: %v", err)
 	}

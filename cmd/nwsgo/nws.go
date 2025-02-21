@@ -3,17 +3,17 @@
 // HTTP responses to endpoints (i.e. forecast, alert and radar data) by
 // the National Weather Service, an agency of the United States.
 
-package nwsgo
+package nws
 
 import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/jacaudi/nwsgo/internal/endpoints/alerts"
-	"github.com/jacaudi/nwsgo/internal/endpoints/gridpoints"
-	"github.com/jacaudi/nwsgo/internal/endpoints/points"
-	"github.com/jacaudi/nwsgo/internal/endpoints/radar"
-	"github.com/jacaudi/nwsgo/internal/endpoints/stations"
+	"github.com/jacaudi/nws/internal/endpoints/alerts"
+	"github.com/jacaudi/nws/internal/endpoints/gridpoints"
+	"github.com/jacaudi/nws/internal/endpoints/points"
+	"github.com/jacaudi/nws/internal/endpoints/radar"
+	"github.com/jacaudi/nws/internal/endpoints/stations"
 )
 
 // Debug

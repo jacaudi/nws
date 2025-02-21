@@ -2,7 +2,7 @@ dylib
 gopath
 jacaudi
 latlon
-nwsgo
+nws
 VTEC
 gridpoint
 KATX

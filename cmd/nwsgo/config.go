@@ -1,4 +1,4 @@
-package nwsgo
+package nws
 
 // Config instance for the API calls executed by the NWS client.
 var config = getDefaultConfig(Config{})
@@ -16,7 +16,7 @@ type Config struct {
 func getDefaultConfig(custom Config) Config {
 	defaultConfig := Config{
 		BaseURL:   "https://api.weather.gov",
-		UserAgent: "nwsgo/0.0.2 (+https://github.com/jacaudi/nwsgo)",
+		UserAgent: "nws/0.0.2 (+https://github.com/jacaudi/nws)",
 		Accept:    "application/ld+json",
 		Units:     "", // Defaults to US units if unspecified
 	}

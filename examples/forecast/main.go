@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/jacaudi/nwsgo/cmd/nwsgo"
+	"github.com/jacaudi/nws/cmd/nws"
 )
 
 var (
@@ -17,7 +17,7 @@ func main() {
 	// Define the Lat & Lon
 	latlon := "47.445259,-122.294533"
 
-	pointData, err := nwsgo.GetPoints(latlon)
+	pointData, err := nws.GetPoints(latlon)
 	if err != nil {
 		log.Fatalf("Failed to get data from GPS location: %v", err)
 	}
@@ -35,7 +35,7 @@ func main() {
 	}
 
 	// Get the radar station details for KATX
-	forecastResponse, err := nwsgo.GetForecast(wfo, gridpoint)
+	forecastResponse, err := nws.GetForecast(wfo, gridpoint)
 	if err != nil {
 		log.Fatalf("Failed to get radar station details: %v", err)
 	}

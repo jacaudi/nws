@@ -1,12 +1,12 @@
-package nwsgo
+package nws
 
 import (
 	"fmt"
 	"reflect"
 	"testing"
 
-	"github.com/jacaudi/nwsgo/cmd/nwsgo"
-	"github.com/jacaudi/nwsgo/internal/endpoints/radar"
+	"github.com/jacaudi/nws/cmd/nws"
+	"github.com/jacaudi/nws/internal/endpoints/radar"
 )
 
 func TestRadarStation(t *testing.T) {
@@ -15,7 +15,7 @@ func TestRadarStation(t *testing.T) {
 	expectedResponse := &radar.RadarStationResponse{
 		// Define the expected response here
 	}
-	response, err := nwsgo.RadarStation(stationID)
+	response, err := nws.RadarStation(stationID)
 	if err != nil {
 		t.Errorf("Unexpected error: %v", err)
 	}
@@ -26,7 +26,7 @@ func TestRadarStation(t *testing.T) {
 	// Test case 2: Error response
 	stationID = "XYZ789"
 	expectedError := fmt.Errorf("failed to unmarshal response: some error")
-	response, err = nwsgo.RadarStation(stationID)
+	response, err = nws.RadarStation(stationID)
 	if err == nil {
 		t.Errorf("Expected error, but got nil")
 	}

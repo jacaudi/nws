@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/jacaudi/nwsgo/cmd/nwsgo"
+	"github.com/jacaudi/nws/cmd/nws"
 )
 
 var (
@@ -41,7 +41,7 @@ func main() {
 	stationID := "KSEA"
 
 	// Get the observation details for KSEA
-	obs, err := nwsgo.GetLatestObservations(stationID)
+	obs, err := nws.GetLatestObservations(stationID)
 	if err != nil {
 		log.Fatalf("Failed to get observation station details: %v", err)
 	}

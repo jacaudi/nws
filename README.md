@@ -1,4 +1,4 @@
-# nwsgo [![GoDoc](https://godoc.org/github.com/jacaudi/nws?status.svg)](https://godoc.org/github.com/jacaudi/nws)
+# nws
 
 ## Purpose
 
@@ -16,9 +16,9 @@ polling for updates.
 `nws` is a Go client for the weather.gov API and supports the following endpoints:
 
 ```go
-nwsgo.GetPoints(latlon string) // Get NWS Data at that point
-nwsgo.RadarStations() // All Radar Sites -- Station Details
-nwsgo.RadarStation(stationID string) // Radar Station Details
+nws.GetPoints(latlon string) // Get NWS Data at that point
+nws.RadarStations() // All Radar Sites -- Station Details
+nws.RadarStation(stationID string) // Radar Station Details
 ```
 
 
