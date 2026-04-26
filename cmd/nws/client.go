@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/url"
 	"runtime/debug"
+	"strings"
 	"time"
 )
 
@@ -82,14 +83,14 @@ func MustNewClient(opts ...Option) *Client {
 
 // WithBaseURL overrides the API base URL. The value must be a parseable
 // absolute URL with an http or https scheme. Trailing slashes are
-// retained as-is; callers should not include one.
+// stripped, so callers do not need to worry about double-slash paths.
 func WithBaseURL(rawURL string) Option {
 	return func(c *Client) error {
 		u, err := url.Parse(rawURL)
 		if err != nil || !u.IsAbs() || (u.Scheme != "http" && u.Scheme != "https") {
 			return ErrInvalidBaseURL
 		}
-		c.BaseURL = rawURL
+		c.BaseURL = strings.TrimRight(rawURL, "/")
 		return nil
 	}
 }
@@ -106,11 +107,17 @@ func WithUserAgent(ua string) Option {
 	}
 }
 
-// WithAccept overrides the Accept header. The library's response struct
-// types are shaped for "application/ld+json"; consumers passing other
-// values must handle the response shape themselves.
+// WithAccept overrides the Accept header. Empty values are rejected
+// with ErrAcceptRequired; pass the default explicitly if you need it.
+//
+// The library's response struct types are shaped for
+// "application/ld+json"; consumers passing other values must handle
+// the response shape themselves.
 func WithAccept(accept string) Option {
 	return func(c *Client) error {
+		if accept == "" {
+			return ErrAcceptRequired
+		}
 		c.Accept = accept
 		return nil
 	}

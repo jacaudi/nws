@@ -55,6 +55,15 @@ func TestWithBaseURL(t *testing.T) {
 			t.Errorf("err = %v, want ErrInvalidBaseURL", err)
 		}
 	})
+	t.Run("trailing-slash-trimmed", func(t *testing.T) {
+		c, err := NewClient(WithBaseURL("https://example.com/"))
+		if err != nil {
+			t.Fatalf("error = %v", err)
+		}
+		if c.BaseURL != "https://example.com" {
+			t.Errorf("BaseURL = %q, want https://example.com", c.BaseURL)
+		}
+	})
 }
 
 func TestWithUserAgent(t *testing.T) {
@@ -71,6 +80,24 @@ func TestWithUserAgent(t *testing.T) {
 		_, err := NewClient(WithUserAgent(""))
 		if !errors.Is(err, ErrUserAgentRequired) {
 			t.Errorf("err = %v, want ErrUserAgentRequired", err)
+		}
+	})
+}
+
+func TestWithAccept(t *testing.T) {
+	t.Run("valid", func(t *testing.T) {
+		c, err := NewClient(WithAccept("application/json"))
+		if err != nil {
+			t.Fatalf("error = %v", err)
+		}
+		if c.Accept != "application/json" {
+			t.Errorf("Accept = %q", c.Accept)
+		}
+	})
+	t.Run("empty", func(t *testing.T) {
+		_, err := NewClient(WithAccept(""))
+		if !errors.Is(err, ErrAcceptRequired) {
+			t.Errorf("err = %v, want ErrAcceptRequired", err)
 		}
 	})
 }

@@ -109,6 +109,48 @@ func TestClient_get_ContextCanceled(t *testing.T) {
 	}
 }
 
+func TestClient_get_AppendsUnitsQueryWhenSet(t *testing.T) {
+	var gotRawQuery string
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		gotRawQuery = r.URL.RawQuery
+		_, _ = w.Write([]byte(`{}`))
+	}))
+	defer srv.Close()
+
+	c, err := NewClient(WithBaseURL(srv.URL), WithUnits("us"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var out struct{}
+	if err := c.get(context.Background(), "/whatever", &out); err != nil {
+		t.Fatal(err)
+	}
+	if gotRawQuery != "units=us" {
+		t.Errorf("RawQuery = %q, want units=us", gotRawQuery)
+	}
+}
+
+func TestClient_get_OmitsUnitsWhenEmpty(t *testing.T) {
+	var gotRawQuery string
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		gotRawQuery = r.URL.RawQuery
+		_, _ = w.Write([]byte(`{}`))
+	}))
+	defer srv.Close()
+
+	c, err := NewClient(WithBaseURL(srv.URL))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var out struct{}
+	if err := c.get(context.Background(), "/whatever", &out); err != nil {
+		t.Fatal(err)
+	}
+	if gotRawQuery != "" {
+		t.Errorf("RawQuery = %q, want empty", gotRawQuery)
+	}
+}
+
 func TestClient_get_ErrorBodyTruncatedTo1KiB(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)

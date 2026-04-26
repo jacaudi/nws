@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 )
 
 // errorBodyLimit is the maximum number of bytes from a non-2xx response
@@ -23,8 +24,11 @@ func (c *Client) get(ctx context.Context, path string, out any) error {
 		return ErrUserAgentRequired
 	}
 
-	url := c.BaseURL + path
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	reqURL := c.BaseURL + path
+	if c.Units != "" {
+		reqURL = reqURL + "?units=" + url.QueryEscape(c.Units)
+	}
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, reqURL, nil)
 	if err != nil {
 		return fmt.Errorf("nws: build request: %w", err)
 	}
@@ -47,7 +51,7 @@ func (c *Client) get(ctx context.Context, path string, out any) error {
 		return &APIError{
 			StatusCode: resp.StatusCode,
 			Status:     resp.Status,
-			URL:        url,
+			URL:        reqURL,
 			Body:       string(body),
 		}
 	}

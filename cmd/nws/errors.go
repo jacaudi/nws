@@ -18,6 +18,10 @@ var (
 	// ErrInvalidBaseURL is returned by WithBaseURL when the value is not a
 	// parseable absolute URL with an http or https scheme.
 	ErrInvalidBaseURL = errors.New("nws: BaseURL must be an absolute http(s) URL")
+
+	// ErrAcceptRequired is returned by WithAccept when the provided value
+	// is empty. Use the default ("application/ld+json") if unsure.
+	ErrAcceptRequired = errors.New("nws: Accept header must not be empty")
 )
 
 // APIError represents a non-2xx response from api.weather.gov.
