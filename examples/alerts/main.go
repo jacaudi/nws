@@ -1,47 +1,54 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/jacaudi/nws/cmd/nws"
 )
 
-var (
-	debug, _ = strconv.ParseBool(os.Getenv("DEBUG"))
-)
+var debug, _ = strconv.ParseBool(os.Getenv("DEBUG"))
 
 func main() {
-
-	activeAlerts, err := nws.GetActiveAlerts()
+	client, err := nws.NewClient(
+		nws.WithUserAgent("nws-example-alerts/1.0 (+https://github.com/jacaudi/nws)"),
+	)
 	if err != nil {
-		log.Fatalf("Failed to get alert details: %v", err)
+		log.Fatalf("NewClient: %v", err)
 	}
 
-	// Print the entire activeAlerts object for debugging
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	active, err := client.GetActiveAlerts(ctx)
+	if err != nil {
+		log.Fatalf("GetActiveAlerts: %v", err)
+	}
 	if debug {
-		fmt.Printf("Active Alert Details: %+v\n\n", activeAlerts)
+		fmt.Printf("Active Alert Details: %+v\n\n", active)
 	}
 
-	// Print the Description of the First Alert Returned
-	fmt.Printf("***-----ALERT EXAMPLE-----***\n%s\n***END***\n", activeAlerts.Data[0].Description)
+	if len(active.Data) > 0 {
+		fmt.Printf("***-----ALERT EXAMPLE-----***\n%s\n***END***\n", active.Data[0].Description)
+	} else {
+		fmt.Println("No active alerts.")
+	}
 
-	// Pull the VTEC of the First 10 Alerts
 	count := 0
-	for _, alert := range activeAlerts.Data {
+	for _, a := range active.Data {
 		if count >= 10 {
 			break
 		}
-		if len(alert.Parameters.VTEC) == 0 {
+		if len(a.Parameters.VTEC) == 0 {
 			continue
 		}
-		fmt.Printf("VTEC of Alert %02d: %s\n", count+1, alert.Parameters.VTEC)
+		fmt.Printf("VTEC of Alert %02d: %s\n", count+1, a.Parameters.VTEC)
 		count++
 	}
 
-	// Calculate the total number of alerts
-	totalAlerts := len(activeAlerts.Data)
-	fmt.Printf("Total number of alerts: %d\n", totalAlerts)
+	fmt.Printf("Total number of alerts: %d\n", len(active.Data))
 }
