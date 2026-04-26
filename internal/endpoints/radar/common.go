@@ -1,5 +1,50 @@
 package radar
 
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"strconv"
+)
+
+// StringOrNumber accepts a JSON value that may be encoded as either a string
+// or a number. The NWS API is inconsistent across stations for some fields
+// (e.g. resolutionVersion), so values are normalized to their string form.
+type StringOrNumber string
+
+func (s *StringOrNumber) UnmarshalJSON(data []byte) error {
+	if len(data) == 0 || bytes.Equal(data, []byte("null")) {
+		*s = ""
+		return nil
+	}
+	if data[0] == '"' {
+		var str string
+		if err := json.Unmarshal(data, &str); err != nil {
+			return err
+		}
+		*s = StringOrNumber(str)
+		return nil
+	}
+	var n json.Number
+	dec := json.NewDecoder(bytes.NewReader(data))
+	dec.UseNumber()
+	if err := dec.Decode(&n); err != nil {
+		return fmt.Errorf("StringOrNumber: %w", err)
+	}
+	*s = StringOrNumber(n.String())
+	return nil
+}
+
+func (s StringOrNumber) MarshalJSON() ([]byte, error) {
+	if s == "" {
+		return []byte("null"), nil
+	}
+	if _, err := strconv.ParseFloat(string(s), 64); err == nil {
+		return []byte(s), nil
+	}
+	return json.Marshal(string(s))
+}
+
 type Adaptation struct {
 	Properties    AdaptationProperties `json:"properties"`
 	ReportingHost string               `json:"reportingHost"`
@@ -97,7 +142,7 @@ type RDAProperties struct {
 	Nl2Path                           string    `json:"nl2Path"`
 	OperabilityStatus                 string    `json:"operabilityStatus"`
 	ReflectivityCalibrationCorrection UnitValue `json:"reflectivityCalibrationCorrection"`
-	ResolutionVersion                 *string   `json:"resolutionVersion"` // Nullable field
+	ResolutionVersion                 *StringOrNumber `json:"resolutionVersion"` // Nullable; API may return string or number
 	Status                            string    `json:"status"`
 	SuperResolutionStatus             string    `json:"superResolutionStatus"`
 	VolumeCoveragePattern             string    `json:"volumeCoveragePattern"`
