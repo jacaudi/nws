@@ -1,64 +1,60 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/jacaudi/nws/cmd/nws"
 )
 
-var (
-	debug, _  = strconv.ParseBool(os.Getenv("DEBUG"))
-	radarMode = ""
-)
+var debug, _ = strconv.ParseBool(os.Getenv("DEBUG"))
 
 func main() {
-	// Define the Lat & Lon
-	latlon := "47.445259,-122.294533"
-
-	pointData, err := nws.GetPoints(latlon)
+	client, err := nws.NewClient(
+		nws.WithUserAgent("nws-example-radar/1.0 (+https://github.com/jacaudi/nws)"),
+	)
 	if err != nil {
-		log.Fatalf("Failed to get data from GPS location: %v", err)
+		log.Fatalf("NewClient: %v", err)
 	}
 
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	latlon := "47.445259,-122.294533"
+	pointData, err := client.GetPoints(ctx, latlon)
+	if err != nil {
+		log.Fatalf("GetPoints: %v", err)
+	}
 	if debug {
-		log.Printf("Points Endpoint Response: %v\n\n", pointData)
+		log.Printf("Points: %+v", pointData)
 	}
 
 	stationID := pointData.RadarStation
-
-	// Get the radar station details for KATX
-	radarStation, err := nws.RadarStation(stationID)
+	station, err := client.RadarStation(ctx, stationID)
 	if err != nil {
-		log.Fatalf("Failed to get radar station details: %v", err)
+		log.Fatalf("RadarStation: %v", err)
 	}
-
-	// Print the entire radarStation object for debugging
 	if debug {
-		fmt.Printf("RadarStation details: %+v\n\n", radarStation)
+		fmt.Printf("RadarStation: %+v\n\n", station)
 	}
 
-	// Extract the Values from the radar station details
-	VCP := radarStation.RDA.Properties.VolumeCoveragePattern
-	name := radarStation.Name
-	version := radarStation.Context.Version
-	Status := radarStation.RDA.Properties.Mode
-
-	if VCP == "R35" {
-		radarMode = "Clear Air Mode"
-	} else if VCP == "R215" {
-		radarMode = "Precipitation Mode"
-	} else {
-		radarMode = "Unknown Mode -- Please Update Code"
+	vcp := station.RDA.Properties.VolumeCoveragePattern
+	mode := "Unknown Mode -- Please Update Code"
+	switch vcp {
+	case "R35":
+		mode = "Clear Air Mode"
+	case "R215":
+		mode = "Precipitation Mode"
 	}
 
-	// Print the VolumeCoveragePattern
-	fmt.Printf("Radar Site: %s - %s\n", stationID, name)
-	fmt.Printf("Volume Coverage Pattern: %s - %s\n", VCP, radarMode)
-	fmt.Printf("Status: %s\n", Status)
+	fmt.Printf("Radar Site: %s - %s\n", stationID, station.Name)
+	fmt.Printf("Volume Coverage Pattern: %s - %s\n", vcp, mode)
+	fmt.Printf("Status: %s\n", station.RDA.Properties.Mode)
 	if debug {
-		fmt.Printf("Version: %s\n", version)
+		fmt.Printf("Version: %s\n", station.Context.Version)
 	}
 }

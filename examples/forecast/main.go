@@ -1,60 +1,64 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/jacaudi/nws/cmd/nws"
 )
 
-var (
-	debug, _ = strconv.ParseBool(os.Getenv("DEBUG"))
-)
+var debug, _ = strconv.ParseBool(os.Getenv("DEBUG"))
 
 func main() {
-	// Define the Lat & Lon
-	latlon := "47.445259,-122.294533"
-
-	pointData, err := nws.GetPoints(latlon)
+	client, err := nws.NewClient(
+		nws.WithUserAgent("nws-example-forecast/1.0 (+https://github.com/jacaudi/nws)"),
+	)
 	if err != nil {
-		log.Fatalf("Failed to get data from GPS location: %v", err)
+		log.Fatalf("NewClient: %v", err)
 	}
 
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	latlon := "47.445259,-122.294533"
+	pointData, err := client.GetPoints(ctx, latlon)
+	if err != nil {
+		log.Fatalf("GetPoints: %v", err)
+	}
 	if debug {
-		log.Printf("Points Endpoint Response: %v\n\n", pointData)
+		log.Printf("Points: %+v", pointData)
 	}
 
 	wfo := pointData.GridID
-	gridpoint := fmt.Sprintf("%s,%s", strconv.FormatFloat(pointData.GridX, 'f', -1, 64), strconv.FormatFloat(pointData.GridY, 'f', -1, 64))
-
+	gridpoint := fmt.Sprintf("%s,%s",
+		strconv.FormatFloat(pointData.GridX, 'f', -1, 64),
+		strconv.FormatFloat(pointData.GridY, 'f', -1, 64),
+	)
 	if debug {
-		log.Printf("wfo: %s", wfo)
-		log.Printf("gridpoint: %s", gridpoint)
+		log.Printf("wfo=%s gridpoint=%s", wfo, gridpoint)
 	}
 
-	// Get the radar station details for KATX
-	forecastResponse, err := nws.GetForecast(wfo, gridpoint)
+	forecast, err := client.GetForecast(ctx, wfo, gridpoint)
 	if err != nil {
-		log.Fatalf("Failed to get radar station details: %v", err)
+		log.Fatalf("GetForecast: %v", err)
 	}
-
 	if debug {
-		log.Printf("Forecast Endpoint Response: %v\n\n", forecastResponse)
+		log.Printf("Forecast: %+v", forecast)
 	}
 
-	todayForecast := fmt.Sprintf("%s -- %s\n", forecastResponse.Periods[0].Name, forecastResponse.Periods[0].ShortForecast)
-	allForecast := ""
-	for _, period := range forecastResponse.Periods {
-		if period.IsDaytime {
-			allForecast += fmt.Sprintf("%s -- High Temperature: %s\n", period.Name, strconv.Itoa(period.Temperature))
-		} else {
-			allForecast += fmt.Sprintf("%s -- Low Temperature: %s\n", period.Name, strconv.Itoa(period.Temperature))
+	today := fmt.Sprintf("%s -- %s\n", forecast.Periods[0].Name, forecast.Periods[0].ShortForecast)
+	all := ""
+	for _, p := range forecast.Periods {
+		label := "Low Temperature"
+		if p.IsDaytime {
+			label = "High Temperature"
 		}
+		all += fmt.Sprintf("%s -- %s: %s\n", p.Name, label, strconv.Itoa(p.Temperature))
 	}
-
-	// Print the Short Forecast
-	fmt.Printf("Forecast: %s\n", todayForecast)
-	fmt.Printf("All Forecasts:\n%s", allForecast)
+	fmt.Printf("Forecast: %s\n", today)
+	fmt.Printf("All Forecasts:\n%s", all)
 }
