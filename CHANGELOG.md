@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/jacaudi/nws/compare/v0.1.0...v0.2.0) (2026-04-26)
+
+* feat!: introduce *Client API for v0.1.0 ([#8](https://github.com/jacaudi/nws/issues/8)) ([d4308b7](https://github.com/jacaudi/nws/commit/d4308b7d212063905582b16a154688130bd2f141)), closes [#3](https://github.com/jacaudi/nws/issues/3) [#4](https://github.com/jacaudi/nws/issues/4) [#7](https://github.com/jacaudi/nws/issues/7) [#6](https://github.com/jacaudi/nws/issues/6) [#2](https://github.com/jacaudi/nws/issues/2) [#4](https://github.com/jacaudi/nws/issues/4) [#7](https://github.com/jacaudi/nws/issues/7) [#6](https://github.com/jacaudi/nws/issues/6) [#2](https://github.com/jacaudi/nws/issues/2) [#2](https://github.com/jacaudi/nws/issues/2) [#3](https://github.com/jacaudi/nws/issues/3) [#4](https://github.com/jacaudi/nws/issues/4) [#6](https://github.com/jacaudi/nws/issues/6) [#7](https://github.com/jacaudi/nws/issues/7) [#5](https://github.com/jacaudi/nws/issues/5)
+
+
+### BREAKING CHANGES
+
+* nws.Config (type) and Config.SetUserAgent /
+Config.SetUnits (methods) are removed. Use nws.NewClient and the
+Functional Options (WithUserAgent, WithUnits, etc.) instead.
+The package-level wrapper functions are unchanged.
+
 ## [0.1.0](https://github.com/jacaudi/nws/compare/v0.0.4...v0.1.0) (2026-04-26)
 
 ### Bug Fixes
