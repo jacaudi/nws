@@ -1,0 +1,40 @@
+# PR Validation
+# Runs on every pull request: lint and test. Nothing is published.
+#
+# Required repo variables (Settings > Variables > Actions):
+#   GO_VERSION          - Go toolchain version (default: stable)
+#   TEST_PACKAGES       - Go test package patterns (default: ./...)
+#   TEST_ARGS           - Extra go test flags (default: empty)
+#   COVERAGE_ENABLED    - Collect coverage (default: true)
+#   COVERAGE_THRESHOLD  - Minimum coverage % (default: 0 = no gate)
+name: PR Validation
+
+"on":
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  lint:
+    uses: jacaudi/github-actions/.github/workflows/component-lint.yml@main
+    permissions:
+      contents: read
+    with:
+      yaml: true
+      go: true
+      go-version: ${{ vars.GO_VERSION || 'stable' }}
+
+  test:
+    uses: jacaudi/github-actions/.github/workflows/component-test.yml@main
+    permissions:
+      contents: read
+    with:
+      test-framework: 'go'
+      go-version: ${{ vars.GO_VERSION || 'stable' }}
+      coverage: ${{ vars.COVERAGE_ENABLED != 'false' }}
+      coverage-threshold: ${{ fromJSON(vars.COVERAGE_THRESHOLD || '0') }}
+      test-packages: ${{ vars.TEST_PACKAGES || './...' }}
+      test-args: ${{ vars.TEST_ARGS || '' }}
