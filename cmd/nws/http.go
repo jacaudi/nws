@@ -27,7 +27,7 @@ func (c *Config) httpRequest(url string, httpResponse bool) ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to make request: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if httpResponse {
 		log.Printf("Received response status: %s", resp.Status)

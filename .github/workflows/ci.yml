@@ -1,17 +1,20 @@
+---
 # CI: lint, test, then semantic-release.
 # Tag + GitHub Release + changelog are produced by semantic-release.
 # Library is auto-indexed by pkg.go.dev once the tag is pushed -- no
 # additional release stage is needed.
 #
 # Required secrets:
-#   APP_ID          - GitHub App ID (so the tag push triggers downstream workflows
-#                     in other repos that consume this library, e.g. dras)
+#   APP_ID          - GitHub App ID (tag push triggers downstream
+#                     consumer workflows, e.g. jacaudi/dras)
 #   APP_PRIVATE_KEY - GitHub App private key
 #
 # Required repo variables (Settings > Variables > Actions):
 #   GO_VERSION          - Go toolchain version (default: stable)
 #   TEST_PACKAGES       - Go test package patterns (default: ./...)
-#   TEST_ARGS           - Extra go test flags (default: empty)
+#   TEST_ARGS           - Extra go test flags
+#                         (default: -skip TestRadarStation; the legacy
+#                          test in tests/ hits the live NWS API)
 #   COVERAGE_ENABLED    - Collect coverage (default: true)
 #   COVERAGE_THRESHOLD  - Minimum coverage % (default: 0 = no gate)
 #
@@ -23,7 +26,7 @@ name: CI
   push:
     branches: [main]
 
-# Newer runs supersede older ones -- cancels pending approval gates
+# Newer runs supersede older ones
 concurrency:
   group: ci
   cancel-in-progress: true
@@ -53,7 +56,7 @@ jobs:
       coverage: ${{ vars.COVERAGE_ENABLED != 'false' }}
       coverage-threshold: ${{ fromJSON(vars.COVERAGE_THRESHOLD || '0') }}
       test-packages: ${{ vars.TEST_PACKAGES || './...' }}
-      test-args: ${{ vars.TEST_ARGS || '' }}
+      test-args: ${{ vars.TEST_ARGS || '-skip TestRadarStation' }}
 
   release:
     needs: [lint, test]

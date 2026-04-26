@@ -1,10 +1,13 @@
+---
 # PR Validation
 # Runs on every pull request: lint and test. Nothing is published.
 #
 # Required repo variables (Settings > Variables > Actions):
 #   GO_VERSION          - Go toolchain version (default: stable)
 #   TEST_PACKAGES       - Go test package patterns (default: ./...)
-#   TEST_ARGS           - Extra go test flags (default: empty)
+#   TEST_ARGS           - Extra go test flags
+#                         (default: -skip TestRadarStation; the legacy
+#                          test in tests/ hits the live NWS API)
 #   COVERAGE_ENABLED    - Collect coverage (default: true)
 #   COVERAGE_THRESHOLD  - Minimum coverage % (default: 0 = no gate)
 name: PR Validation
@@ -37,4 +40,4 @@ jobs:
       coverage: ${{ vars.COVERAGE_ENABLED != 'false' }}
       coverage-threshold: ${{ fromJSON(vars.COVERAGE_THRESHOLD || '0') }}
       test-packages: ${{ vars.TEST_PACKAGES || './...' }}
-      test-args: ${{ vars.TEST_ARGS || '' }}
+      test-args: ${{ vars.TEST_ARGS || '-skip TestRadarStation' }}
