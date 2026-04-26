@@ -1,13 +1,25 @@
 //https://www.weather.gov/documentation/services-web-api
-// Package nws implements a basic wrapper around api.weather.gov to grab
-// HTTP responses to endpoints (i.e. forecast, alert and radar data) by
-// the National Weather Service, an agency of the United States.
 
+// Package nws is a Go client for the U.S. National Weather Service API
+// (api.weather.gov). It exposes a *Client type for explicit
+// configuration plus package-level wrapper functions that delegate to
+// DefaultClient for one-shot calls.
+//
+// Idiomatic usage:
+//
+//	client, err := nws.NewClient(
+//	    nws.WithUserAgent("myapp/1.0 (contact@example.com)"),
+//	)
+//	if err != nil { return err }
+//	station, err := client.RadarStation(ctx, "KATX")
+//
+// One-shot usage (uses DefaultClient with context.Background()):
+//
+//	station, err := nws.RadarStation("KATX")
 package nws
 
 import (
-	"encoding/json"
-	"fmt"
+	"context"
 
 	"github.com/jacaudi/nws/internal/endpoints/alerts"
 	"github.com/jacaudi/nws/internal/endpoints/gridpoints"
@@ -16,94 +28,38 @@ import (
 	"github.com/jacaudi/nws/internal/endpoints/stations"
 )
 
-// Debug
-var debug = false
-
-// GetPoints grabs NWS data at the following Lat/Lon coordinates
+// GetPoints is the DefaultClient.GetPoints wrapper.
+// See (*Client).GetPoints.
 func GetPoints(latlon string) (*points.PointsResponse, error) {
-	url := config.endpointPoints(latlon)
-	response, err := config.httpRequest(url, debug)
-	if err != nil {
-		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
-	}
-	var pointsResponse points.PointsResponse
-	err = json.Unmarshal(response, &pointsResponse)
-	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
-	}
-	return &pointsResponse, nil
+	return DefaultClient.GetPoints(context.Background(), latlon)
 }
 
-// GetRadarStation fetches the radar station details for a given station ID.
+// RadarStations is the DefaultClient.RadarStations wrapper.
+// See (*Client).RadarStations.
 func RadarStations() (*radar.RadarStationsResponse, error) {
-	url := config.endpointRadarStations()
-	response, err := config.httpRequest(url, debug)
-	if err != nil {
-		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
-	}
-	var radarStationsResponse radar.RadarStationsResponse
-	err = json.Unmarshal(response, &radarStationsResponse)
-	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
-	}
-	return &radarStationsResponse, nil
+	return DefaultClient.RadarStations(context.Background())
 }
 
-// RadarStation fetches the radar station details for a given station ID.
+// RadarStation is the DefaultClient.RadarStation wrapper.
+// See (*Client).RadarStation.
 func RadarStation(stationID string) (*radar.RadarStationResponse, error) {
-	url := config.endpointRadarStation(stationID)
-	response, err := config.httpRequest(url, debug)
-	if err != nil {
-		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
-	}
-	var radarStationResponse radar.RadarStationResponse
-	err = json.Unmarshal(response, &radarStationResponse)
-	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
-	}
-	return &radarStationResponse, nil
+	return DefaultClient.RadarStation(context.Background(), stationID)
 }
 
-// GetForecast fetches the forecast details for a given Lat/Lon.
-func GetForecast(wfo string, gridpoint string) (*gridpoints.ForecastResponse, error) {
-	url := config.endpointGridForecast(wfo, gridpoint)
-	response, err := config.httpRequest(url, debug)
-	if err != nil {
-		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
-	}
-	var ForecastResponse gridpoints.ForecastResponse
-	err = json.Unmarshal(response, &ForecastResponse)
-	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
-	}
-	return &ForecastResponse, nil
+// GetForecast is the DefaultClient.GetForecast wrapper.
+// See (*Client).GetForecast.
+func GetForecast(wfo, gridpoint string) (*gridpoints.ForecastResponse, error) {
+	return DefaultClient.GetForecast(context.Background(), wfo, gridpoint)
 }
 
-// GetForecast fetches the forecast details for a given Lat/Lon.
+// GetActiveAlerts is the DefaultClient.GetActiveAlerts wrapper.
+// See (*Client).GetActiveAlerts.
 func GetActiveAlerts() (*alerts.ActiveAlertsResponse, error) {
-	url := config.endpointActiveAlerts()
-	response, err := config.httpRequest(url, debug)
-	if err != nil {
-		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
-	}
-	var ActiveAlertsResponse alerts.ActiveAlertsResponse
-	err = json.Unmarshal(response, &ActiveAlertsResponse)
-	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
-	}
-	return &ActiveAlertsResponse, nil
+	return DefaultClient.GetActiveAlerts(context.Background())
 }
 
+// GetLatestObservations is the DefaultClient.GetLatestObservations
+// wrapper. See (*Client).GetLatestObservations.
 func GetLatestObservations(stationID string) (*stations.LatestObservationsResponse, error) {
-	url := config.endpointLatestObservations(stationID)
-	response, err := config.httpRequest(url, debug)
-	if err != nil {
-		return nil, fmt.Errorf("failed to make HTTP request: %w", err)
-	}
-	var LatestObservationsResponse stations.LatestObservationsResponse
-	err = json.Unmarshal(response, &LatestObservationsResponse)
-	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
-	}
-	return &LatestObservationsResponse, nil
+	return DefaultClient.GetLatestObservations(context.Background(), stationID)
 }

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	debugpkg "runtime/debug"
+	"runtime/debug"
 	"time"
 )
 
@@ -18,7 +18,7 @@ const (
 // version is the library version, read from build info at package init.
 // Falls back to "dev" when build info is unavailable (e.g. `go run`).
 var version = func() string {
-	if info, ok := debugpkg.ReadBuildInfo(); ok {
+	if info, ok := debug.ReadBuildInfo(); ok {
 		if v := info.Main.Version; v != "" && v != "(devel)" {
 			return v
 		}
